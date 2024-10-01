@@ -1,0 +1,261 @@
+{
+  "伊宁": {
+    "coordinates": [
+      43.908048,
+      81.2748
+    ],
+    "attractions": []
+  },
+  "博乐": {
+    "coordinates": [
+      44.89803,
+      82.07259
+    ],
+    "attractions": []
+  },
+  "乌鲁木齐": {
+    "coordinates": [
+      43.80096,
+      87.60046
+    ],
+    "attractions": []
+  },
+  "嘉峪关": {
+    "coordinates": [
+      39.81121,
+      98.28618
+    ],
+    "attractions": []
+  },
+  "酒泉": {
+    "coordinates": [
+      39.74318,
+      98.51736
+    ],
+    "attractions": []
+  },
+  "张掖": {
+    "coordinates": [
+      38.93417,
+      100.45167
+    ],
+    "attractions": []
+  },
+  "兰州": {
+    "coordinates": [
+      36.05701,
+      103.83987
+    ],
+    "attractions": []
+  },
+  "重庆": {
+    "coordinates": [
+      29.56278,
+      106.55278
+    ],
+    "attractions": []
+  },
+  "丽江": {
+    "coordinates": [
+      26.86879,
+      100.22072
+    ],
+    "attractions": []
+  },
+  "大理": {
+    "coordinates": [
+      25.58474,
+      100.21229
+    ],
+    "attractions": []
+  },
+  "昆明": {
+    "coordinates": [
+      25.03889,
+      102.71833
+    ],
+    "attractions": []
+  },
+  "西安": {
+    "coordinates": [
+      34.25833,
+      108.92861
+    ],
+    "attractions": []
+  },
+  "石家庄": {
+    "coordinates": [
+      38.04139,
+      114.47861
+    ],
+    "attractions": []
+  },
+  "淄博": {
+    "coordinates": [
+      36.79056,
+      118.06333
+    ],
+    "attractions": []
+  },
+  "济南": {
+    "coordinates": [
+      36.66833,
+      116.99722
+    ],
+    "attractions": []
+  },
+  "青岛": {
+    "coordinates": [
+      36.06488,
+      120.38042
+    ],
+    "attractions": []
+  },
+  "苏州": {
+    "coordinates": [
+      31.30227,
+      120.63132
+    ],
+    "attractions": []
+  },
+  "南京": {
+    "coordinates": [
+      32.06167,
+      118.77778
+    ],
+    "attractions": []
+  },
+  "杭州": {
+    "coordinates": [
+      30.29365,
+      120.16142
+    ],
+    "attractions": []
+  },
+  "上海": {
+    "coordinates": [
+      31.22222,
+      121.45806
+    ],
+    "attractions": []
+  },
+  "大连": {
+    "coordinates": [
+      38.91222,
+      121.60222
+    ],
+    "attractions": []
+  },
+  "乌兰察布": {
+    "coordinates": [
+      40.9906,
+      113.12401
+    ],
+    "attractions": []
+  },
+  "武汉": {
+    "coordinates": [
+      30.58333,
+      114.26667
+    ],
+    "attractions": []
+  },
+  "天津": {
+    "coordinates": [
+      39.14666667,
+      117.20555556
+    ],
+    "attractions": []
+  },
+  "秦皇岛": {
+    "coordinates": [
+      39.93167,
+      119.58833
+    ],
+    "attractions": []
+  },
+  "桂林": {
+    "coordinates": [
+      25.28194,
+      110.28639
+    ],
+    "attractions": []
+  },
+  "北京": {
+    "coordinates": [
+      39.9075,
+      116.39723
+    ],
+    "attractions": []
+  },
+  "保定": {
+    "coordinates": [
+      38.85111,
+      115.49028
+    ],
+    "attractions": []
+  },
+  "黄山": {
+    "coordinates": [
+      29.71139,
+      118.3125
+    ],
+    "attractions": []
+  },
+  "厦门": {
+    "coordinates": [
+      24.47979,
+      118.08187
+    ],
+    "attractions": []
+  },
+  "金华": {
+    "coordinates": [
+      29.10678,
+      119.64421
+    ],
+    "attractions": []
+  },
+  "湘潭": {
+    "coordinates": [
+      27.85,
+      112.9
+    ],
+    "attractions": []
+  },
+  "长沙": {
+    "coordinates": [
+      28.255,
+      112.986
+    ],
+    "attractions": []
+  },
+  "上饶": {
+    "coordinates": [
+      28.45179,
+      117.94287
+    ],
+    "attractions": []
+  },
+  "吉安": {
+    "coordinates": [
+      27.11716,
+      114.97927
+    ],
+    "attractions": []
+  },
+  "九江": {
+    "coordinates": [
+      29.70475,
+      116.00206
+    ],
+    "attractions": []
+  },
+  "南昌": {
+    "coordinates": [
+      28.68396,
+      115.85306
+    ],
+    "attractions": []
+  }
+}

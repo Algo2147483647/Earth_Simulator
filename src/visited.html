@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_48e13dcdf407c1c60ca6626242c41534 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_48e13dcdf407c1c60ca6626242c41534" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_48e13dcdf407c1c60ca6626242c41534 = L.map(
+                "map_48e13dcdf407c1c60ca6626242c41534",
+                {
+                    center: [35.0, 110.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_625953b658a4d3467b770a5bb8b68d8e = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            var marker_1cb9ec9acf39c39612d645bd1fbbce21 = L.marker(
+                [43.908048, 81.2748],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_1cb9ec9acf39c39612d645bd1fbbce21.bindTooltip(
+                `<div>
+                     伊宁
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0d489e25864377376544aabade82bfad = L.marker(
+                [44.89803, 82.07259],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_0d489e25864377376544aabade82bfad.bindTooltip(
+                `<div>
+                     博乐
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b5496975b019cf2c44a4de2cbab6bee8 = L.marker(
+                [43.80096, 87.60046],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_b5496975b019cf2c44a4de2cbab6bee8.bindTooltip(
+                `<div>
+                     乌鲁木齐
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c02f6fc00ded43e3fa4740a58b232e43 = L.marker(
+                [39.81121, 98.28618],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_c02f6fc00ded43e3fa4740a58b232e43.bindTooltip(
+                `<div>
+                     嘉峪关
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2e066299fcf9c09e9ec69277b2f88859 = L.marker(
+                [39.74318, 98.51736],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_2e066299fcf9c09e9ec69277b2f88859.bindTooltip(
+                `<div>
+                     酒泉
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0bc571e626a717e37269be99c4d51827 = L.marker(
+                [38.93417, 100.45167],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_0bc571e626a717e37269be99c4d51827.bindTooltip(
+                `<div>
+                     张掖
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_21d5ac172c3d93b0fb7459528aa92479 = L.marker(
+                [36.05701, 103.83987],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_21d5ac172c3d93b0fb7459528aa92479.bindTooltip(
+                `<div>
+                     兰州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_8fc352f0aea8b40089e9fb0016840225 = L.marker(
+                [29.56278, 106.55278],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_8fc352f0aea8b40089e9fb0016840225.bindTooltip(
+                `<div>
+                     重庆
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f8e84628be863782743469b2d73558bf = L.marker(
+                [26.86879, 100.22072],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_f8e84628be863782743469b2d73558bf.bindTooltip(
+                `<div>
+                     丽江
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_bc5d566f58e2de4224f59b08b760c7c7 = L.marker(
+                [25.58474, 100.21229],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_bc5d566f58e2de4224f59b08b760c7c7.bindTooltip(
+                `<div>
+                     大理
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_34dc46ef51954d43a23efb053d61cd75 = L.marker(
+                [25.03889, 102.71833],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_34dc46ef51954d43a23efb053d61cd75.bindTooltip(
+                `<div>
+                     昆明
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e3213d373c66772e503acd832356f359 = L.marker(
+                [34.25833, 108.92861],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_e3213d373c66772e503acd832356f359.bindTooltip(
+                `<div>
+                     西安
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d4c76a0832d5b0ebd4ad88a1bd0a3dc1 = L.marker(
+                [38.04139, 114.47861],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_d4c76a0832d5b0ebd4ad88a1bd0a3dc1.bindTooltip(
+                `<div>
+                     石家庄
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7d49b9edf58796d18c484e2c78dc9dd9 = L.marker(
+                [36.79056, 118.06333],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_7d49b9edf58796d18c484e2c78dc9dd9.bindTooltip(
+                `<div>
+                     淄博
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_afff5e9a3e505623970b54c3ff49345e = L.marker(
+                [36.66833, 116.99722],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_afff5e9a3e505623970b54c3ff49345e.bindTooltip(
+                `<div>
+                     济南
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d4985ec73224f8066b1c4bd17df1de8d = L.marker(
+                [36.06488, 120.38042],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_d4985ec73224f8066b1c4bd17df1de8d.bindTooltip(
+                `<div>
+                     青岛
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_8be0421ecaf63c718140cbae04caafa8 = L.marker(
+                [31.30227, 120.63132],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_8be0421ecaf63c718140cbae04caafa8.bindTooltip(
+                `<div>
+                     苏州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9651eb4b2664bb8ee4dfa6d13dcfc71d = L.marker(
+                [32.06167, 118.77778],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_9651eb4b2664bb8ee4dfa6d13dcfc71d.bindTooltip(
+                `<div>
+                     南京
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6bf0976d68b6bb9e9cdf027fba71fdba = L.marker(
+                [30.29365, 120.16142],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_6bf0976d68b6bb9e9cdf027fba71fdba.bindTooltip(
+                `<div>
+                     杭州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_19a3464f1495caa51995ec89a5c33276 = L.marker(
+                [31.22222, 121.45806],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_19a3464f1495caa51995ec89a5c33276.bindTooltip(
+                `<div>
+                     上海
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_59ab9298e551c5fc293b2e2da153717a = L.marker(
+                [38.91222, 121.60222],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_59ab9298e551c5fc293b2e2da153717a.bindTooltip(
+                `<div>
+                     大连
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_da464ee804cf4b27505c5eb1dad9615c = L.marker(
+                [40.9906, 113.12401],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_da464ee804cf4b27505c5eb1dad9615c.bindTooltip(
+                `<div>
+                     乌兰察布
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e34d46cf13f69fa0e952f3d6b55a9d68 = L.marker(
+                [30.58333, 114.26667],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_e34d46cf13f69fa0e952f3d6b55a9d68.bindTooltip(
+                `<div>
+                     武汉
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_83d847343849b83ee3ccdf115385a7ba = L.marker(
+                [39.14666667, 117.20555556],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_83d847343849b83ee3ccdf115385a7ba.bindTooltip(
+                `<div>
+                     天津
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_58637f3936d774bae5ff39bd882996e0 = L.marker(
+                [39.93167, 119.58833],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_58637f3936d774bae5ff39bd882996e0.bindTooltip(
+                `<div>
+                     秦皇岛
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9efc105cce008efd2a1160459ac12371 = L.marker(
+                [25.28194, 110.28639],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_9efc105cce008efd2a1160459ac12371.bindTooltip(
+                `<div>
+                     桂林
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_965f1c838e1a580ba9553a920cca33a6 = L.marker(
+                [39.9075, 116.39723],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_965f1c838e1a580ba9553a920cca33a6.bindTooltip(
+                `<div>
+                     北京
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_adf6754f367f1669e3dea6abb83ab1f4 = L.marker(
+                [38.85111, 115.49028],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_adf6754f367f1669e3dea6abb83ab1f4.bindTooltip(
+                `<div>
+                     保定
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_315ca66856f529c0883a4b53f3a1ea4b = L.marker(
+                [29.71139, 118.3125],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_315ca66856f529c0883a4b53f3a1ea4b.bindTooltip(
+                `<div>
+                     黄山
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b640be1c3f122a6a0f5759582aad44d5 = L.marker(
+                [24.47979, 118.08187],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_b640be1c3f122a6a0f5759582aad44d5.bindTooltip(
+                `<div>
+                     厦门
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ed6a79e3c0b66ba4370ad33902ad788f = L.marker(
+                [29.10678, 119.64421],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_ed6a79e3c0b66ba4370ad33902ad788f.bindTooltip(
+                `<div>
+                     金华
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_37caf720fb9bd323386f581cb9acb7af = L.marker(
+                [27.85, 112.9],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_37caf720fb9bd323386f581cb9acb7af.bindTooltip(
+                `<div>
+                     湘潭
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_62dde3b1d8e81b71b4eeb13ac26c28ec = L.marker(
+                [28.255, 112.986],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_62dde3b1d8e81b71b4eeb13ac26c28ec.bindTooltip(
+                `<div>
+                     长沙
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f49b11e183afdd1eeea0113263ab8e2b = L.marker(
+                [28.45179, 117.94287],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_f49b11e183afdd1eeea0113263ab8e2b.bindTooltip(
+                `<div>
+                     上饶
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e94419ed318b5bc201afa276a60079bd = L.marker(
+                [27.11716, 114.97927],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_e94419ed318b5bc201afa276a60079bd.bindTooltip(
+                `<div>
+                     吉安
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c5a4855c983d65e8dfad60a4d7d5c33c = L.marker(
+                [29.70475, 116.00206],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_c5a4855c983d65e8dfad60a4d7d5c33c.bindTooltip(
+                `<div>
+                     九江
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c37088ed92d2214522c7b44605ef2c14 = L.marker(
+                [28.68396, 115.85306],
+                {}
+            ).addTo(map_48e13dcdf407c1c60ca6626242c41534);
+        
+    
+            marker_c37088ed92d2214522c7b44605ef2c14.bindTooltip(
+                `<div>
+                     南昌
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
