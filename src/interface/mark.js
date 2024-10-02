@@ -14,7 +14,7 @@ function DrawPointInEarth(points) {
 
       // 将点添加到场景中
       scene.add(point);
-      Points.push(point)
+      Points.push(point);
     }
 }
 
@@ -23,21 +23,33 @@ function DrawLinesInEarth(lines) {
     const radius = 2; // Earth radius in spherical coordinates
     const material = new THREE.LineBasicMaterial({ color: 0xAAAAAA });
 
+    // Function to interpolate between two points along a great circle
+    function interpolatePoints(startPoint, endPoint, numPoints) {
+        const points = [];
+        for (let i = 0; i <= numPoints; i++) {
+            const t = i / numPoints;
+
+            // Use spherical linear interpolation (slerp) for great circle path
+            const interpolatedPoint = new THREE.Vector3().lerpVectors(startPoint, endPoint, t).normalize().multiplyScalar(radius);
+            points.push(interpolatedPoint);
+        }
+        return points;
+    }
+
     // Loop through each line definition in the array
     lines.forEach(([st_lat, st_long, ed_lat, ed_long]) => {
-        const points = [];
-
         // Convert start point (latitude, longitude) to spherical coordinates
         const st_phi = THREE.MathUtils.degToRad(90 - st_lat); // Latitude to polar angle
-        const st_theta = THREE.MathUtils.degToRad(st_long); // Longitude to azimuthal angle
+        const st_theta = THREE.MathUtils.degToRad(90 + st_long); // Longitude to azimuthal angle
         const startPoint = new THREE.Vector3().setFromSphericalCoords(radius, st_phi, st_theta);
-        points.push(startPoint);
 
         // Convert end point (latitude, longitude) to spherical coordinates
         const ed_phi = THREE.MathUtils.degToRad(90 - ed_lat); // Latitude to polar angle
-        const ed_theta = THREE.MathUtils.degToRad(ed_long); // Longitude to azimuthal angle
+        const ed_theta = THREE.MathUtils.degToRad(90 + ed_long); // Longitude to azimuthal angle
         const endPoint = new THREE.Vector3().setFromSphericalCoords(radius, ed_phi, ed_theta);
-        points.push(endPoint);
+
+        // Interpolate points along the great circle path
+        const points = interpolatePoints(startPoint, endPoint, 100); // Use 100 points for a smooth curve
 
         // Create the line geometry and add it to the group
         const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -48,7 +60,6 @@ function DrawLinesInEarth(lines) {
     // Add the group to the scene
     scene.add(linesGroup);
 }
-
 
 function DrawLongitudeLatitudeLinesInEarth() {
     const latLongLines = new THREE.Group();

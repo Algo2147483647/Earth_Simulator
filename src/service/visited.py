@@ -1,14 +1,10 @@
 import folium
-import json
-import pandas as pd
-import os
-
 import os
 import json
 import pandas as pd
+from minimum_spanning_tree import *  # Assuming this provides the 'prim' function
 
-
-def GetVisitedPoints():
+def GetVisitedJson():
     visitedFile = '../../assets/visited.txt'
     citiesFile = '../../assets/cities.xlsx'
 
@@ -26,7 +22,7 @@ def GetVisitedPoints():
             cityData = citiesInfo.loc[cityName]
             cityInfo[cityName] = {
                 "coordinates": [cityData['latitude'], cityData['longitude']],
-                "attractions": []
+                "attractions": []  # This can be populated later if needed
             }
 
     # Save as JSON
@@ -35,7 +31,23 @@ def GetVisitedPoints():
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonFile:
         jsonFile.write(jsonData)
 
-    return jsonData
+    return cityInfo  # Return the dictionary instead of JSON string
+
+def GetVisitedPoints():
+    visitedData = GetVisitedJson()  # Now it's a dictionary
+    points = [value['coordinates'] for value in visitedData.values()]
+    return points
+
+def GetVisitedTree():
+    points = GetVisitedPoints()
+    mst, total_weight = prim(points)  # Assuming 'prim' is defined in 'minimum_spanning_tree'
+
+    edges = []
+    for item in mst:
+        edges.append([
+            points[item[0]][0], points[item[0]][1],
+            points[item[1]][0], points[item[1]][1]])
+    return edges
 
 
 def ReadVisitedJson(url = './visited.json'):

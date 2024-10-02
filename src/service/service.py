@@ -9,9 +9,13 @@ CORS(app)
 # GET 请求 - 获取特定项目
 @app.route('/get_visited_points', methods=['GET'])
 def Service_GetVisitedPoints():
-    resp = GetVisitedPoints()
+    resp = GetVisitedJson()
     return {"status": "success", "data": resp}, 200
 
+@app.route('/get_visited_tree', methods=['GET'])
+def Service_GetVisitedTree():
+    resp = GetVisitedTree()
+    return {"status": "success", "data": resp}, 200
 
 
 if __name__ == '__main__':

@@ -15,8 +15,8 @@ window.addEventListener('keydown', function(event) {
   }
 
   if (event.key === 'p' || event.key === 'P') {
-    pointsPromise = GetVisitedPoints();
-    pointsPromise
+    resp = GetVisitedPoints();
+    resp
     .then(points => {
         Points.length = 0;
         DrawPointInEarth(points); // 调用绘制函数
@@ -24,9 +24,17 @@ window.addEventListener('keydown', function(event) {
     .catch(error => {
         console.error('DrawPointInEarth Error:', error);
     });
+  }
 
-    // for (let p of points) {
-    //   p.visible = !p.visible;
-    // }
+  if (event.key === 't' || event.key === 'T') {
+    resp = GetVisitedTree();
+    resp
+    .then(edges => {
+        console.log(edges);
+        DrawLinesInEarth(edges); // 调用绘制函数
+    })
+    .catch(error => {
+        console.error('DrawPointInEarth Error:', error);
+    });
   }
 });
