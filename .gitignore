@@ -2,6 +2,9 @@
 *.jpg
 *.tif
 
+# Puthon
+__pycache__/
+
 # Logs
 logs
 *.log

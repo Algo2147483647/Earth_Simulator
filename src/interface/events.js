@@ -15,8 +15,18 @@ window.addEventListener('keydown', function(event) {
   }
 
   if (event.key === 'p' || event.key === 'P') {
-    for (let p of points) {
-      p.visible = !p.visible;
-    }
+    pointsPromise = GetVisitedPoints();
+    pointsPromise
+    .then(points => {
+        Points.length = 0;
+        DrawPointInEarth(points); // 调用绘制函数
+    })
+    .catch(error => {
+        console.error('DrawPointInEarth Error:', error);
+    });
+
+    // for (let p of points) {
+    //   p.visible = !p.visible;
+    // }
   }
 });

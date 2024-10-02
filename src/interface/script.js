@@ -1,43 +1,9 @@
-let scene, camera, renderer, sphere, controls, latLongLines, coordinates = [], points = [];
+let scene, camera, renderer, sphere, controls, latLongLines, coordinates = [], Points = [];
 
 // Set the initial texture
-const textureA = new THREE.TextureLoader().load('../assets/earth.png');
-const textureB = new THREE.TextureLoader().load('../assets/elevation_map.png');
+const textureA = new THREE.TextureLoader().load('../../assets/earth.png');
+const textureB = new THREE.TextureLoader().load('../../assets/elevation_map.png');
 let currentTexture = textureA;
-
-fetch('../assets/points2.txt')
-  .then(response => response.text())
-  .then(data => {
-    // 将文件中的数据转换为数组
-    let lines = data.split('\n');
-    for (let line of lines) {
-      let parts = line.split(',');
-      if (parts.length === 2) {
-        let lat = parseFloat(parts[0]);
-        let lon = parseFloat(parts[1]);
-        coordinates.push([lat, lon]);
-      }
-    }
-
-    // 在地球上绘制点
-    for (let coord of coordinates) {
-      let phi = (90 - coord[0]) * (Math.PI / 180);
-      let theta = (-coord[1]) * (Math.PI / 180);
-
-      let pointGeometry = new THREE.SphereGeometry(0.0050, 16, 16);
-      let pointMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // 红色
-      let point = new THREE.Mesh(pointGeometry, pointMaterial);
-
-      point.position.x = 2 * Math.sin(phi) * Math.cos(theta);
-      point.position.y = 2 * Math.cos(phi);
-      point.position.z = 2 * Math.sin(phi) * Math.sin(theta);
-
-      // 将点添加到场景中
-      scene.add(point);
-      points.push(point)
-    }
-  }
-  )
 
 function initThreeJs() {
   // Create scene
@@ -80,35 +46,7 @@ function init() {
   scene.add(sphere);
 
   // 绘制经纬度线
-  latLongLines = new THREE.Group();
-
-  for (let lat = -90; lat <= 90; lat += 10) { // 精度为1度
-    const points = [];
-    for (let long = -180; long <= 180; long += 1) { // 精度为1度
-      const phi = THREE.MathUtils.degToRad(90 - lat);
-      const theta = THREE.MathUtils.degToRad(long);
-      points.push(new THREE.Vector3().setFromSphericalCoords(2, phi, theta));
-    }
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xAAAAAA, shading: THREE.SmoothShading });
-    const line = new THREE.LineLoop(lineGeometry, lineMaterial);
-    latLongLines.add(line);
-  }
-
-  for (let long = -180; long <= 180; long += 10) { // 精度为1度
-    const points = [];
-    for (let lat = -90; lat <= 90; lat += 1) { // 精度为1度
-      const phi = THREE.MathUtils.degToRad(90 - lat);
-      const theta = THREE.MathUtils.degToRad(long);
-      points.push(new THREE.Vector3().setFromSphericalCoords(2, phi, theta));
-    }
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xAAAAAA, shading: THREE.SmoothShading });
-    const line = new THREE.LineLoop(lineGeometry, lineMaterial);
-    latLongLines.add(line);
-  }
-  latLongLines.visible = false
-  scene.add(latLongLines);
+  DrawLongitudeLatitudeLinesInEarth()
 
   // Create and add stars to the scene
   createStars();
