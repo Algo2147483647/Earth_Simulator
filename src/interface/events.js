@@ -1,40 +1,67 @@
 window.addEventListener('resize', onWindowResize);
 
-// Listen for keydown events
-window.addEventListener('keydown', function(event) {
+function onWindowResize() {
+  Visualizer.getInstance().camera.aspect = window.innerWidth / window.innerHeight;
+  Visualizer.getInstance().camera.updateProjectionMatrix();
+  Visualizer.getInstance().renderer.setSize(window.innerWidth, window.innerHeight);
+  Visualizer.getInstance().renderer.render(Visualizer.getInstance().scene, Visualizer.getInstance().camera);
+}
 
-  if (event.key === 'a' || event.key === 'A') {
-    // Swap the texture
-    currentTexture = currentTexture === textureA ? textureB : textureA;
-    sphere.material.map = currentTexture;
-    sphere.material.needsUpdate = true;  // This line is important to update the texture
+// Key event handler
+window.addEventListener('keydown', handleKeydown);
+
+// Handle keydown events
+function handleKeydown(event) {
+  const key = event.key.toLowerCase();
+
+  switch (key) {
+    case 'a':
+      drawSurface();
+      break;
+    case 'l':
+      toggleLatLongLines();
+      break;
+    case 'p':
+      drawVisitedPoints();
+      break;
+    case 't':
+      drawVisitedTree();
+      break;
+    default:
+      break;
   }
+}
 
-  if (event.key === 'l' || event.key === 'L') {
-    latLongLines.visible = !latLongLines.visible; // 切换经纬度线的可见性
-  }
+// Swap the texture between textureA and textureB
+function drawSurface() {
+  Earth.getInstance().earth.material.map = new THREE.TextureLoader().load('../../assets/elevation_map.png');
+  Earth.getInstance().earth.material.needsUpdate = true;  // Ensure material is updated
+}
 
-  if (event.key === 'p' || event.key === 'P') {
-    resp = GetVisitedPoints();
-    resp
+// Toggle visibility of latitude and longitude lines
+function toggleLatLongLines() {
+  Earth.getInstance().latLonLines.visible = !Earth.getInstance().latLonLines.visible;
+}
+
+// Fetch and draw visited points
+function drawVisitedPoints() {
+  GetVisitedPoints()
     .then(points => {
-        Points.length = 0;
-        DrawPointInEarth(points); // 调用绘制函数
+      Earth.getInstance().drawPoints(points)
     })
     .catch(error => {
-        console.error('DrawPointInEarth Error:', error);
+      console.error('Error drawing points:', error);
     });
-  }
+}
 
-  if (event.key === 't' || event.key === 'T') {
-    resp = GetVisitedTree();
-    resp
+// Fetch and draw visited tree structure
+function drawVisitedTree() {
+  GetVisitedTree()
     .then(edges => {
-        console.log(edges);
-        DrawLinesInEarth(edges); // 调用绘制函数
+      console.log(edges);
+      Earth.getInstance().drawLines(edges)
     })
     .catch(error => {
-        console.error('DrawPointInEarth Error:', error);
+      console.error('Error drawing tree:', error);
     });
-  }
-});
+}

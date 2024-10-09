@@ -24,16 +24,20 @@
   </style>
 </head>
 <body>
-  <div id="overlay">Welcome</div>
   <script src="three.min.js"></script>
   <script src="OrbitControls.js"></script>
-  <script src="script.js"></script>
-  <script src="mark.js"></script>
+  <script src="animate.js"></script>
+  <script src="controller.js"></script>
+  <script src="earth.js"></script>
   <script src="events.js"></script>
+  <script src="stars.js"></script>
   <script src="visited.js"></script>
+  <script src="visualizer.js"></script>
   <script>
-    // Initialize
-    init();
+    // Usage of Earth
+    const ControllerInstance = new Controller();
+    const EarthInstance = new Earth();
+    const StarsInstance = new Stars();
   </script>
 </body>
 </html>

@@ -1,4 +1,18 @@
 {
+  "沈阳": {
+    "coordinates": [
+      41.79222,
+      123.43278
+    ],
+    "attractions": []
+  },
+  "哈尔滨": {
+    "coordinates": [
+      45.75,
+      126.65
+    ],
+    "attractions": []
+  },
   "伊宁": {
     "coordinates": [
       43.908048,
