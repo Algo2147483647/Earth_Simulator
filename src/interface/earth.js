@@ -17,6 +17,13 @@ class Earth {
         Earth.instance = this; // Store the instance
     }
 
+    static getInstance() {
+        if (!Earth.instance) {
+            Earth.instance = new Earth();
+        }
+        return Earth.instance;
+    }
+
     init() {
         this.createEarth();
         this.createAtmosphere();
@@ -153,11 +160,61 @@ class Earth {
         Visualizer.getInstance().addToScene(this.latLonLines);
     }
 
-    static getInstance() {
-        if (!Earth.instance) {
-            Earth.instance = new Earth();
+    drawRectangleWithImage(lat_min, lat_max, lon_min, lon_max, image) {
+        const radius = 2; // 地球半径
+        const material = new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load(image),
+            side: THREE.DoubleSide,  // 双面渲染，避免正面背面问题
+        });
+
+        // Convert lat/lon to spherical coordinates
+        function latLonToVector3(lat, lon) {
+            const phi = THREE.MathUtils.degToRad(90 - lat);
+            const theta = THREE.MathUtils.degToRad(lon + 90);
+            const x = radius * Math.sin(phi) * Math.cos(theta);
+            const y = radius * Math.cos(phi);
+            const z = radius * Math.sin(phi) * Math.sin(theta);
+            return new THREE.Vector3(x, y, z);
         }
-        return Earth.instance;
+
+        // Get the four corners of the rectangle in spherical coordinates
+        const bottomLeft = latLonToVector3(lat_min, lon_min);
+        const bottomRight = latLonToVector3(lat_min, lon_max);
+        const topLeft = latLonToVector3(lat_max, lon_min);
+        const topRight = latLonToVector3(lat_max, lon_max);
+
+        // Create a custom geometry using the four corner points
+        const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+            bottomLeft.x, bottomLeft.y, bottomLeft.z,  // Bottom-left
+            bottomRight.x, bottomRight.y, bottomRight.z,  // Bottom-right
+            topLeft.x, topLeft.y, topLeft.z,  // Top-left
+            topRight.x, topRight.y, topRight.z   // Top-right
+        ]);
+
+        // Set the vertices in geometry
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+        // Define face indices for the rectangle (2 triangles)
+        const indices = new Uint16Array([
+            0, 1, 2,  // First triangle
+            2, 1, 3   // Second triangle
+        ]);
+        geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+        // Define UV coordinates for the texture mapping
+        const uvs = new Float32Array([
+            0, 0,  // Bottom-left
+            1, 0,  // Bottom-right
+            0, 1,  // Top-left
+            1, 1   // Top-right
+        ]);
+        geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+        // Create the mesh and add it to the scene
+        const mesh = new THREE.Mesh(geometry, material);
+        Visualizer.getInstance().addToScene(mesh);
     }
+
 }
 

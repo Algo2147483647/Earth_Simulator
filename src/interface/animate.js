@@ -3,14 +3,14 @@ function fadeIn(material, duration) {
     const start = performance.now();
 
     function fadeInAnimation(time) {
-    opacity = (time - start) / duration;
-    if (opacity >= 1) {
-      opacity = 1;
-      material.opacity = 1; // Set material opacity explicitly
-      return;
-    }
-    material.opacity = opacity;
-    requestAnimationFrame(fadeInAnimation);
+        opacity = (time - start) / duration;
+        if (opacity >= 1) {
+            opacity = 1;
+            material.opacity = 1; // Set material opacity explicitly
+            return;
+        }
+        material.opacity = opacity;
+        requestAnimationFrame(fadeInAnimation);
     }
 
     requestAnimationFrame(fadeInAnimation);

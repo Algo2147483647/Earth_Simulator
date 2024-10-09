@@ -32,9 +32,19 @@ function handleKeydown(event) {
   }
 }
 
-// Swap the texture between textureA and textureB
+
+let drawSurfaceFlag = true
+
 function drawSurface() {
-  Earth.getInstance().earth.material.map = new THREE.TextureLoader().load('../../assets/elevation_map.png');
+  map = null
+  if(drawSurfaceFlag) {
+    map = new THREE.TextureLoader().load('../../assets/elevation_map.png');
+  } else {
+    map = new THREE.TextureLoader().load('../../assets/earth.png');
+  }
+  drawSurfaceFlag = !drawSurfaceFlag
+
+  Earth.getInstance().earth.material.map = map
   Earth.getInstance().earth.material.needsUpdate = true;  // Ensure material is updated
 }
 
