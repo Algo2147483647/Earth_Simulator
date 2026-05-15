@@ -60,10 +60,10 @@ export function CesiumViewer({
     viewer.scene.globe.depthTestAgainstTerrain = false;
     viewer.scene.skyAtmosphere.show = true;
     viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(105, 35, 8_000_000),
+      destination: Cesium.Cartesian3.fromDegrees(105, 35, 9_200_000),
       orientation: {
         heading: 0,
-        pitch: Cesium.Math.toRadians(-72),
+        pitch: Cesium.Math.toRadians(-90),
         roll: 0
       }
     });
@@ -103,6 +103,11 @@ export function CesiumViewer({
 
     viewer.camera.flyTo({
       destination: Cesium.Cartesian3.fromDegrees(city.location.lon, city.location.lat, 600_000),
+      orientation: {
+        heading: 0,
+        pitch: Cesium.Math.toRadians(-90),
+        roll: 0
+      },
       duration: 1.4
     });
   }, [cities, flyToCityRequest, selectedCityId]);
@@ -119,7 +124,15 @@ export function CesiumViewer({
       Math.max(...cities.map((city) => city.location.lon)) + 8,
       Math.max(...cities.map((city) => city.location.lat)) + 5
     );
-    viewer.camera.flyTo({ destination: rectangle, duration: 1.2 });
+    viewer.camera.flyTo({
+      destination: rectangle,
+      orientation: {
+        heading: 0,
+        pitch: Cesium.Math.toRadians(-90),
+        roll: 0
+      },
+      duration: 1.2
+    });
   }, [cities, flyToAllRequest]);
 
   return <div ref={containerRef} className="cesium-root" />;
