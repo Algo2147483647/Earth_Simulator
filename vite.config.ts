@@ -1,0 +1,10 @@
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  define: {
+    CESIUM_BASE_URL: JSON.stringify('/cesium/')
+  },
+  server: {
+    port: 5173
+  }
+});

@@ -18,6 +18,7 @@ jspm_packages/
 
 # Optional npm cache directory
 .npm
+.npm-cache/
 
 # Environment variables file
 .env
@@ -41,7 +42,6 @@ dist/
 
 # Gatsby specific
 .cache/
-public/
 
 # Vite specific
 dist/
@@ -56,8 +56,8 @@ dist/
 
 # Build output directories
 build/
-public/
 dist/
+public/cesium/
 
 # IDEs and editors
 .vscode/
