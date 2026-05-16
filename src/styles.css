@@ -200,6 +200,29 @@ input {
   gap: 8px;
 }
 
+.segmented-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.segmented-control button {
+  min-height: 30px;
+  border: 0;
+  background: transparent;
+  color: #aeb8c8;
+  font-size: 12px;
+}
+
+.segmented-control button.selected {
+  color: #ffffff;
+  background: rgba(91, 192, 235, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
 .wide-button {
   width: 100%;
 }
@@ -309,6 +332,49 @@ input {
 .cesium-viewer-bottom,
 .cesium-credit-lightbox-overlay {
   display: none !important;
+}
+
+.cesium-baseLayerPicker-categoryTitle:empty {
+  display: none;
+}
+
+.cesium-baseLayerPicker-dropDown {
+  border: 0;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.055) 42%, rgba(8, 12, 20, 0.34)),
+    rgba(8, 12, 20, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 52px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+
+.cesium-baseLayerPicker-choices {
+  border: 0;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.cesium-baseLayerPicker-itemIcon {
+  border: 0;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.cesium-baseLayerPicker-item:hover .cesium-baseLayerPicker-itemIcon {
+  border: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 14px rgba(189, 236, 248, 0.36);
+}
+
+.cesium-baseLayerPicker-selectedItem .cesium-baseLayerPicker-itemIcon {
+  border: 0;
+  box-shadow:
+    inset 0 0 0 2px rgba(189, 236, 248, 0.85),
+    0 0 18px rgba(91, 192, 235, 0.38);
 }
 
 @media (max-width: 720px) {

@@ -16,7 +16,7 @@ import { useMemo, useRef, useState } from 'react';
 import { buildMinimumSpanningTree } from '../features/routes/mst';
 import { useVisitedCities } from '../features/visited/useVisitedCities';
 import { CesiumViewer } from '../globe/CesiumViewer';
-import type { Measurement } from '../globe/layers/measureLayer';
+import type { Measurement, MeasurementType } from '../globe/layers/measureLayer';
 import { useGlobeStore } from '../globe/store';
 
 export function App() {
@@ -24,8 +24,12 @@ export function App() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [query, setQuery] = useState('');
   const [panelCollapsed, setPanelCollapsed] = useState(false);
-  const [measurement, setMeasurement] = useState<Measurement>({ points: 0, distanceKm: 0 });
+  const [measurement, setMeasurement] = useState<Measurement>({ points: 0, distanceKm: 0, areaKm2: 0 });
+  const [measurementType, setMeasurementType] = useState<MeasurementType>('distance');
   const [clearMeasurementRequest, setClearMeasurementRequest] = useState(0);
+  const [currentLocationRequest, setCurrentLocationRequest] = useState({ lat: 0, lon: 0, request: 0 });
+  const [locating, setLocating] = useState(false);
+  const [locationError, setLocationError] = useState<string>();
   const {
     showVisitedPoints,
     showRoutes,
@@ -51,6 +55,36 @@ export function App() {
   const visibleCities = trimmedQuery ? cities.filter((city) => city.name.includes(trimmedQuery)) : cities;
   const totalDistance = routes.reduce((sum, routeEdge) => sum + routeEdge.distanceKm, 0);
 
+  function locateCurrentPosition() {
+    if (!navigator.geolocation) {
+      setLocationError('Current location is not supported by this browser');
+      return;
+    }
+
+    setLocating(true);
+    setLocationError(undefined);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setSelectedCityId(undefined);
+        setCurrentLocationRequest((current) => ({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+          request: current.request + 1
+        }));
+        setLocating(false);
+      },
+      (geoError) => {
+        setLocationError(geoError.message || 'Failed to get current location');
+        setLocating(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10_000,
+        maximumAge: 30_000
+      }
+    );
+  }
+
   return (
     <main className="app-shell">
       <CesiumViewer
@@ -61,10 +95,12 @@ export function App() {
         showGrid={showGrid}
         showDayNight={showDayNight}
         measureMode={measureMode}
+        measurementType={measurementType}
         clearMeasurementRequest={clearMeasurementRequest}
         selectedCityId={selectedCityId}
         flyToCityRequest={flyToCityRequest}
         flyToAllRequest={flyToAllRequest}
+        currentLocationRequest={currentLocationRequest}
         onSelectCity={setSelectedCityId}
         onMeasurementChange={setMeasurement}
       />
@@ -91,6 +127,7 @@ export function App() {
         {!panelCollapsed ? (
           <>
             {error ? <p className="error-text">{error}</p> : null}
+            {locationError ? <p className="error-text">{locationError}</p> : null}
 
             <section className="control-section">
               <div className="section-title">
@@ -187,9 +224,9 @@ export function App() {
                   <Map aria-hidden="true" />
                   All Points
                 </button>
-                <button type="button" disabled={!selectedCity} onClick={() => selectedCity && requestFlyToCity(selectedCity.id)}>
+                <button type="button" disabled={locating} onClick={locateCurrentPosition}>
                   <LocateFixed aria-hidden="true" />
-                  Locate
+                  {locating ? 'Locating' : 'Locate'}
                 </button>
               </div>
             </section>
@@ -209,7 +246,25 @@ export function App() {
                   <Trash2 aria-hidden="true" />
                 </button>
               </div>
-              <strong className="measurement-value">{formatDistance(measurement.distanceKm)}</strong>
+              <div className="segmented-control" role="group" aria-label="Measurement type">
+                <button
+                  type="button"
+                  className={measurementType === 'distance' ? 'selected' : ''}
+                  onClick={() => setMeasurementType('distance')}
+                >
+                  Distance
+                </button>
+                <button
+                  type="button"
+                  className={measurementType === 'area' ? 'selected' : ''}
+                  onClick={() => setMeasurementType('area')}
+                >
+                  Area
+                </button>
+              </div>
+              <strong className="measurement-value">
+                {measurementType === 'area' ? formatArea(measurement.areaKm2) : formatDistance(measurement.distanceKm)}
+              </strong>
             </section>
 
             {selectedCity ? (
@@ -261,4 +316,12 @@ function formatDistance(distanceKm: number) {
   }
 
   return `${distanceKm.toLocaleString(undefined, { maximumFractionDigits: 2 })} km`;
+}
+
+function formatArea(areaKm2: number) {
+  if (areaKm2 < 1) {
+    return `${Math.round(areaKm2 * 1_000_000).toLocaleString()} m2`;
+  }
+
+  return `${areaKm2.toLocaleString(undefined, { maximumFractionDigits: 2 })} km2`;
 }

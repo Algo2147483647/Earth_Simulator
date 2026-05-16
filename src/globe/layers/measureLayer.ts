@@ -4,10 +4,14 @@ import type { GlobeLayer } from './types';
 export type Measurement = {
   points: number;
   distanceKm: number;
+  areaKm2: number;
 };
+
+export type MeasurementType = 'distance' | 'area';
 
 type MeasureLayerState = {
   active: boolean;
+  type: MeasurementType;
   clearRequest: number;
 };
 
@@ -16,6 +20,7 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
   let dataSource: Cesium.CustomDataSource | undefined;
   let handler: Cesium.ScreenSpaceEventHandler | undefined;
   let active = false;
+  let type: MeasurementType = 'distance';
   let lastClearRequest = 0;
   let positions: Cesium.Cartesian3[] = [];
   let pointerDownPosition: Cesium.Cartesian2 | undefined;
@@ -24,7 +29,7 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
   function reset() {
     positions = [];
     dataSource?.entities.removeAll();
-    onChange({ points: 0, distanceKm: 0 });
+    onChange({ points: 0, distanceKm: 0, areaKm2: 0 });
     viewer?.scene.requestRender();
   }
 
@@ -64,11 +69,24 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
       });
     });
 
+    if (type === 'area' && positions.length >= 3) {
+      dataSource.entities.add({
+        id: 'measure-area',
+        polygon: {
+          hierarchy: new Cesium.PolygonHierarchy(positions),
+          material: Cesium.Color.fromCssColorString('#5bc0eb').withAlpha(0.24),
+          outline: true,
+          outlineColor: Cesium.Color.fromCssColorString('#f9f871')
+        }
+      });
+    }
+
     if (positions.length >= 2) {
+      const linePositions = type === 'area' && positions.length >= 3 ? [...positions, positions[0]] : positions;
       dataSource.entities.add({
         id: 'measure-line',
         polyline: {
-          positions,
+          positions: linePositions,
           width: 3,
           arcType: Cesium.ArcType.GEODESIC,
           material: Cesium.Color.fromCssColorString('#f9f871').withAlpha(0.9),
@@ -80,7 +98,7 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
         id: 'measure-label',
         position: positions[positions.length - 1],
         label: {
-          text: formatDistance(totalDistanceKm(positions)),
+          text: type === 'area' ? formatArea(areaKm2(positions)) : formatDistance(totalDistanceKm(positions)),
           font: '600 14px sans-serif',
           fillColor: Cesium.Color.WHITE,
           showBackground: true,
@@ -92,7 +110,7 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
       });
     }
 
-    onChange({ points: positions.length, distanceKm: totalDistanceKm(positions) });
+    onChange({ points: positions.length, distanceKm: totalDistanceKm(positions), areaKm2: areaKm2(positions) });
     viewer?.scene.requestRender();
   }
 
@@ -154,6 +172,10 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
 
     update(nextState) {
       active = nextState.active;
+      if (type !== nextState.type) {
+        type = nextState.type;
+        redraw();
+      }
       if (dataSource) {
         dataSource.show = active || positions.length > 0;
       }
@@ -201,6 +223,23 @@ function totalDistanceKm(positions: Cesium.Cartesian3[]) {
   return totalMeters / 1000;
 }
 
+function areaKm2(positions: Cesium.Cartesian3[]) {
+  if (positions.length < 3) {
+    return 0;
+  }
+
+  const earthRadiusMeters = Cesium.Ellipsoid.WGS84.maximumRadius;
+  let area = 0;
+
+  for (let index = 0; index < positions.length; index += 1) {
+    const current = Cesium.Cartographic.fromCartesian(positions[index]);
+    const next = Cesium.Cartographic.fromCartesian(positions[(index + 1) % positions.length]);
+    area += (next.longitude - current.longitude) * (2 + Math.sin(current.latitude) + Math.sin(next.latitude));
+  }
+
+  return Math.abs((area * earthRadiusMeters * earthRadiusMeters) / 2) / 1_000_000;
+}
+
 function distanceMeters(from: Cesium.Cartesian3, to: Cesium.Cartesian3) {
   const fromCartographic = Cesium.Cartographic.fromCartesian(from);
   const toCartographic = Cesium.Cartographic.fromCartesian(to);
@@ -214,4 +253,12 @@ function formatDistance(distanceKm: number) {
   }
 
   return `${distanceKm.toLocaleString(undefined, { maximumFractionDigits: 2 })} km`;
+}
+
+function formatArea(area: number) {
+  if (area < 1) {
+    return `${Math.round(area * 1_000_000).toLocaleString()} m2`;
+  }
+
+  return `${area.toLocaleString(undefined, { maximumFractionDigits: 2 })} km2`;
 }
