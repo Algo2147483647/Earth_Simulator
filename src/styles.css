@@ -1,4 +1,8 @@
 :root {
+  --map-accent-rgb: 106, 149, 159;
+  --map-accent-soft-rgb: 128, 164, 169;
+  --map-accent-deep-rgb: 58, 97, 110;
+  --measure-accent: #d9bf73;
   color: #f6f8fb;
   background: #07090d;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -160,7 +164,7 @@ input {
 .toggle-row input {
   width: 18px;
   height: 18px;
-  accent-color: #5bc0eb;
+  accent-color: rgb(var(--map-accent-soft-rgb));
 }
 
 .toggle-label-with-icon {
@@ -229,10 +233,10 @@ input {
 .segmented-control button.selected {
   color: #ffffff;
   background:
-    linear-gradient(180deg, rgba(91, 192, 235, 0.38), rgba(65, 143, 177, 0.26)),
-    rgba(91, 192, 235, 0.18);
+    linear-gradient(180deg, rgba(var(--map-accent-soft-rgb), 0.26), rgba(var(--map-accent-deep-rgb), 0.2)),
+    rgba(var(--map-accent-rgb), 0.13);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
@@ -274,7 +278,7 @@ input {
 }
 
 .side-panel button:hover:not(:disabled) {
-  border-color: rgba(189, 236, 248, 0.38);
+  border-color: rgba(var(--map-accent-soft-rgb), 0.3);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.21), rgba(255, 255, 255, 0.075)),
     rgba(38, 53, 68, 0.62);
@@ -282,7 +286,7 @@ input {
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     inset 0 -1px 0 rgba(0, 0, 0, 0.18),
     0 1px 3px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(91, 192, 235, 0.08);
+    0 0 0 1px rgba(var(--map-accent-rgb), 0.055);
 }
 
 .side-panel button:active:not(:disabled) {
@@ -297,10 +301,10 @@ input {
 
 .side-panel button:focus-visible {
   outline: 0;
-  border-color: rgba(116, 208, 249, 0.82);
+  border-color: rgba(var(--map-accent-soft-rgb), 0.7);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 0 3px rgba(91, 192, 235, 0.22),
+    0 0 0 3px rgba(var(--map-accent-rgb), 0.16),
     0 1px 2px rgba(0, 0, 0, 0.28);
 }
 
@@ -346,10 +350,10 @@ input {
 .side-panel .segmented-control button.selected:hover:not(:disabled) {
   color: #ffffff;
   background:
-    linear-gradient(180deg, rgba(91, 192, 235, 0.38), rgba(65, 143, 177, 0.26)),
-    rgba(91, 192, 235, 0.18);
+    linear-gradient(180deg, rgba(var(--map-accent-soft-rgb), 0.26), rgba(var(--map-accent-deep-rgb), 0.2)),
+    rgba(var(--map-accent-rgb), 0.13);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
@@ -382,13 +386,13 @@ input {
 }
 
 .search-box:focus-within {
-  border-color: rgba(116, 208, 249, 0.72);
+  border-color: rgba(var(--map-accent-soft-rgb), 0.58);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06)),
     rgba(12, 18, 27, 0.54);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 0 0 3px rgba(91, 192, 235, 0.18),
+    0 0 0 3px rgba(var(--map-accent-rgb), 0.13),
     0 1px 2px rgba(0, 0, 0, 0.22);
 }
 
@@ -463,13 +467,13 @@ input {
 }
 
 .city-list button.selected {
-  border-color: rgba(116, 208, 249, 0.42);
+  border-color: rgba(var(--map-accent-soft-rgb), 0.34);
   color: #ffffff;
   background:
-    linear-gradient(180deg, rgba(91, 192, 235, 0.34), rgba(58, 139, 178, 0.2)),
-    rgba(91, 192, 235, 0.16);
+    linear-gradient(180deg, rgba(var(--map-accent-soft-rgb), 0.2), rgba(var(--map-accent-deep-rgb), 0.15)),
+    rgba(var(--map-accent-rgb), 0.105);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 1px 1px rgba(0, 0, 0, 0.18);
 }
 
@@ -496,7 +500,7 @@ input {
 .measurement-value {
   display: block;
   margin-top: 8px;
-  color: #f9f871;
+  color: var(--measure-accent);
   font-size: 19px;
 }
 
@@ -546,14 +550,14 @@ input {
   border: 0;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 14px rgba(189, 236, 248, 0.36);
+    0 0 14px rgba(var(--map-accent-soft-rgb), 0.28);
 }
 
 .cesium-baseLayerPicker-selectedItem .cesium-baseLayerPicker-itemIcon {
   border: 0;
   box-shadow:
-    inset 0 0 0 2px rgba(189, 236, 248, 0.85),
-    0 0 18px rgba(91, 192, 235, 0.38);
+    inset 0 0 0 2px rgba(var(--map-accent-soft-rgb), 0.7),
+    0 0 18px rgba(var(--map-accent-rgb), 0.26);
 }
 
 @media (max-width: 720px) {
