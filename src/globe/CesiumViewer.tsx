@@ -268,16 +268,16 @@ function createImageryProviderViewModels() {
 function createTerrainProviderViewModels() {
   return [
     new Cesium.ProviderViewModel({
-      name: 'ArcGIS World Elevation',
-      tooltip: 'Global 3D terrain from Esri ArcGIS World Elevation',
-      iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/CesiumWorldTerrain.png'),
-      creationFunction: () => Cesium.ArcGISTiledElevationTerrainProvider.fromUrl(ARCGIS_WORLD_ELEVATION_URL)
-    }),
-    new Cesium.ProviderViewModel({
       name: 'WGS84 Ellipsoid',
       tooltip: 'Flat WGS84 ellipsoid terrain',
       iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
       creationFunction: () => new Cesium.EllipsoidTerrainProvider()
+    }),
+    new Cesium.ProviderViewModel({
+      name: 'ArcGIS World Elevation',
+      tooltip: 'Global 3D terrain from Esri ArcGIS World Elevation',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/CesiumWorldTerrain.png'),
+      creationFunction: () => Cesium.ArcGISTiledElevationTerrainProvider.fromUrl(ARCGIS_WORLD_ELEVATION_URL)
     })
   ];
 }
