@@ -1,5 +1,5 @@
 export type RouteEdge = {
-  fromCityId: string;
-  toCityId: string;
+  fromPointId: string;
+  toPointId: string;
   distanceKm: number;
 };

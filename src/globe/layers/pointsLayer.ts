@@ -1,14 +1,14 @@
 import * as Cesium from 'cesium';
-import type { City } from '../../features/visited/types';
+import type { Point } from '../../features/visited/types';
 import type { GlobeLayer } from './types';
 
 type PointsState = {
-  cities: City[];
+  points: Point[];
   visible: boolean;
-  selectedCityId?: string;
+  selectedPointId?: string;
 };
 
-export function createPointsLayer(onSelectCity: (cityId?: string) => void): GlobeLayer<PointsState> {
+export function createPointsLayer(onSelectPoint: (pointId?: string) => void): GlobeLayer<PointsState> {
   let viewer: Cesium.Viewer | undefined;
   let dataSource: Cesium.CustomDataSource | undefined;
   let handler: Cesium.ScreenSpaceEventHandler | undefined;
@@ -22,14 +22,14 @@ export function createPointsLayer(onSelectCity: (cityId?: string) => void): Glob
       handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction((movement: Cesium.ScreenSpaceEventHandler.PositionedEvent) => {
         const picked = viewer?.scene.pick(movement.position);
-        const cityId = picked?.id?.properties?.cityId?.getValue();
-        if (typeof cityId === 'string') {
-          onSelectCity(cityId);
+        const pointId = picked?.id?.properties?.pointId?.getValue();
+        if (typeof pointId === 'string') {
+          onSelectPoint(pointId);
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
 
-    update({ cities, visible, selectedCityId }) {
+    update({ points, visible, selectedPointId }) {
       if (!dataSource) {
         return;
       }
@@ -37,14 +37,14 @@ export function createPointsLayer(onSelectCity: (cityId?: string) => void): Glob
       dataSource.show = visible;
       dataSource.entities.removeAll();
 
-      for (const city of cities) {
-        const selected = city.id === selectedCityId;
+      for (const point of points) {
+        const selected = point.id === selectedPointId;
         dataSource.entities.add({
-          id: `city-${city.id}`,
-          name: city.name,
-          position: Cesium.Cartesian3.fromDegrees(city.location.lon, city.location.lat, city.location.height ?? 0),
+          id: `point-${point.id}`,
+          name: point.name,
+          position: Cesium.Cartesian3.fromDegrees(point.location.lon, point.location.lat, point.location.height ?? 0),
           properties: {
-            cityId: city.id
+            pointId: point.id
           },
           point: {
             pixelSize: selected ? 14 : 9,
@@ -54,7 +54,7 @@ export function createPointsLayer(onSelectCity: (cityId?: string) => void): Glob
             disableDepthTestDistance: Number.POSITIVE_INFINITY
           },
           label: {
-            text: city.name,
+            text: point.name,
             font: selected ? '600 15px sans-serif' : '13px sans-serif',
             fillColor: Cesium.Color.WHITE,
             outlineColor: Cesium.Color.BLACK.withAlpha(0.8),

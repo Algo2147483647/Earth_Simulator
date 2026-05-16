@@ -32,9 +32,9 @@ npm run dev -- --port 5180 --strictPort
 
 - `src/app/`: React application entry UI.
 - `src/globe/`: Cesium Viewer, layer lifecycle code, and global globe state.
-- `src/features/visited/`: Visited city data loading and type definitions.
+- `src/features/visited/`: Visited point data loading and type definitions.
 - `src/features/routes/`: Minimum spanning tree route calculation based on great-circle distance.
-- `public/data/visited-cities.json`: Cleaned visited city data.
+- `public/data/visited-points.json`: Cleaned visited point data.
 
 ## Notes
 

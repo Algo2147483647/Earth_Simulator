@@ -1,4 +1,4 @@
-export type City = {
+export type Point = {
   id: string;
   name: string;
   location: {

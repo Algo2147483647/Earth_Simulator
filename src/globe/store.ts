@@ -6,16 +6,16 @@ type GlobeState = {
   showGrid: boolean;
   showDayNight: boolean;
   measureMode: boolean;
-  selectedCityId?: string;
-  flyToCityRequest: number;
+  selectedPointId?: string;
+  flyToPointRequest: number;
   flyToAllRequest: number;
   setShowPoints: (visible: boolean) => void;
   setShowRoutes: (visible: boolean) => void;
   setShowGrid: (visible: boolean) => void;
   setShowDayNight: (visible: boolean) => void;
   setMeasureMode: (active: boolean) => void;
-  setSelectedCityId: (cityId?: string) => void;
-  requestFlyToCity: (cityId: string) => void;
+  setSelectedPointId: (pointId?: string) => void;
+  requestFlyToPoint: (pointId: string) => void;
   requestFlyToAll: () => void;
 };
 
@@ -25,19 +25,19 @@ export const useGlobeStore = create<GlobeState>((set) => ({
   showGrid: true,
   showDayNight: true,
   measureMode: false,
-  selectedCityId: undefined,
-  flyToCityRequest: 0,
+  selectedPointId: undefined,
+  flyToPointRequest: 0,
   flyToAllRequest: 0,
   setShowPoints: (visible) => set({ showPoints: visible }),
   setShowRoutes: (visible) => set({ showRoutes: visible }),
   setShowGrid: (visible) => set({ showGrid: visible }),
   setShowDayNight: (visible) => set({ showDayNight: visible }),
   setMeasureMode: (active) => set({ measureMode: active }),
-  setSelectedCityId: (cityId) => set({ selectedCityId: cityId }),
-  requestFlyToCity: (cityId) =>
+  setSelectedPointId: (pointId) => set({ selectedPointId: pointId }),
+  requestFlyToPoint: (pointId) =>
     set((state) => ({
-      selectedCityId: cityId,
-      flyToCityRequest: state.flyToCityRequest + 1
+      selectedPointId: pointId,
+      flyToPointRequest: state.flyToPointRequest + 1
     })),
   requestFlyToAll: () => set((state) => ({ flyToAllRequest: state.flyToAllRequest + 1 }))
 }));

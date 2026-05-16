@@ -17,13 +17,13 @@ import {
 } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 import { buildMinimumSpanningTree } from '../features/routes/mst';
-import { useVisitedCities } from '../features/visited/useVisitedCities';
+import { useVisitedPoints } from '../features/visited/useVisitedPoints';
 import { CesiumViewer } from '../globe/CesiumViewer';
 import type { Measurement, MeasurementType } from '../globe/layers/measureLayer';
 import { useGlobeStore } from '../globe/store';
 
 export function App() {
-  const { cities, loading, error, sourceName, loadCitiesFromFile } = useVisitedCities();
+  const { points, loading, error, sourceName, loadPointsFromFile } = useVisitedPoints();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [query, setQuery] = useState('');
   const [panelCollapsed, setPanelCollapsed] = useState(false);
@@ -39,23 +39,23 @@ export function App() {
     showGrid,
     showDayNight,
     measureMode,
-    selectedCityId,
+    selectedPointId,
     setShowPoints,
     setShowRoutes,
     setShowGrid,
     setShowDayNight,
     setMeasureMode,
-    setSelectedCityId,
-    flyToCityRequest,
+    setSelectedPointId,
+    flyToPointRequest,
     flyToAllRequest,
-    requestFlyToCity,
+    requestFlyToPoint,
     requestFlyToAll
   } = useGlobeStore();
 
-  const routes = useMemo(() => buildMinimumSpanningTree(cities), [cities]);
-  const selectedCity = cities.find((city) => city.id === selectedCityId);
+  const routes = useMemo(() => buildMinimumSpanningTree(points), [points]);
+  const selectedPoint = points.find((point) => point.id === selectedPointId);
   const trimmedQuery = query.trim();
-  const visibleCities = trimmedQuery ? cities.filter((city) => city.name.includes(trimmedQuery)) : cities;
+  const visiblePoints = trimmedQuery ? points.filter((point) => point.name.includes(trimmedQuery)) : points;
   const totalDistance = routes.reduce((sum, routeEdge) => sum + routeEdge.distanceKm, 0);
 
   function locateCurrentPosition() {
@@ -68,7 +68,7 @@ export function App() {
     setLocationError(undefined);
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setSelectedCityId(undefined);
+        setSelectedPointId(undefined);
         setCurrentLocationRequest((current) => ({
           lat: position.coords.latitude,
           lon: position.coords.longitude,
@@ -91,7 +91,7 @@ export function App() {
   return (
     <main className="app-shell">
       <CesiumViewer
-        cities={cities}
+        points={points}
         routes={routes}
         showPoints={showPoints}
         showRoutes={showRoutes}
@@ -100,11 +100,11 @@ export function App() {
         measureMode={measureMode}
         measurementType={measurementType}
         clearMeasurementRequest={clearMeasurementRequest}
-        selectedCityId={selectedCityId}
-        flyToCityRequest={flyToCityRequest}
+        selectedPointId={selectedPointId}
+        flyToPointRequest={flyToPointRequest}
         flyToAllRequest={flyToAllRequest}
         currentLocationRequest={currentLocationRequest}
-        onSelectCity={setSelectedCityId}
+        onSelectPoint={setSelectedPointId}
         onMeasurementChange={setMeasurement}
       />
 
@@ -132,7 +132,7 @@ export function App() {
             {error ? <p className="error-text">{error}</p> : null}
             {locationError ? <p className="error-text">{locationError}</p> : null}
 
-            <section className="control-section">
+            <section className="panel-section">
               <div className="section-title">
                 <FileJson aria-hidden="true" />
                 <span>Data</span>
@@ -145,8 +145,8 @@ export function App() {
                 onChange={(event) => {
                   const file = event.target.files?.[0];
                   if (file) {
-                    void loadCitiesFromFile(file);
-                    setSelectedCityId(undefined);
+                    void loadPointsFromFile(file);
+                    setSelectedPointId(undefined);
                   }
                   event.target.value = '';
                 }}
@@ -157,7 +157,7 @@ export function App() {
               </button>
             </section>
 
-            <section className="control-section">
+            <section className="panel-section">
               <div className="section-title">
                 <Settings2 aria-hidden="true" />
                 <span>Tools</span>
@@ -165,7 +165,7 @@ export function App() {
               <div className="tool-button-grid">
                 <button
                   type="button"
-                  className={showPoints ? 'selected' : ''}
+                  className={showPoints ? 'is-selected' : ''}
                   aria-pressed={showPoints}
                   onClick={() => setShowPoints(!showPoints)}
                 >
@@ -174,7 +174,7 @@ export function App() {
                 </button>
                 <button
                   type="button"
-                  className={showRoutes ? 'selected' : ''}
+                  className={showRoutes ? 'is-selected' : ''}
                   aria-pressed={showRoutes}
                   onClick={() => setShowRoutes(!showRoutes)}
                 >
@@ -183,7 +183,7 @@ export function App() {
                 </button>
                 <button
                   type="button"
-                  className={showGrid ? 'selected' : ''}
+                  className={showGrid ? 'is-selected' : ''}
                   aria-pressed={showGrid}
                   onClick={() => setShowGrid(!showGrid)}
                 >
@@ -192,7 +192,7 @@ export function App() {
                 </button>
                 <button
                   type="button"
-                  className={showDayNight ? 'selected' : ''}
+                  className={showDayNight ? 'is-selected' : ''}
                   aria-pressed={showDayNight}
                   onClick={() => setShowDayNight(!showDayNight)}
                 >
@@ -201,14 +201,14 @@ export function App() {
                 </button>
                 <button
                   type="button"
-                  className={measureMode ? 'selected' : ''}
+                  className={measureMode ? 'is-selected' : ''}
                   aria-pressed={measureMode}
                   onClick={() => setMeasureMode(!measureMode)}
                 >
                   <DraftingCompass aria-hidden="true" />
                   Measure
                 </button>
-                <button type="button" disabled={cities.length === 0} onClick={requestFlyToAll}>
+                <button type="button" disabled={points.length === 0} onClick={requestFlyToAll}>
                   <Map aria-hidden="true" />
                   All Points
                 </button>
@@ -222,7 +222,7 @@ export function App() {
             <section className="metrics-grid" aria-label="Statistics">
               <div>
                 <span>Points</span>
-                <strong>{cities.length}</strong>
+                <strong>{points.length}</strong>
               </div>
               <div>
                 <span>Edges</span>
@@ -234,14 +234,14 @@ export function App() {
               </div>
             </section>
 
-            <section className="city-card">
+            <section className="panel-card">
               <div className="section-title">
                 <DraftingCompass aria-hidden="true" />
                 <span>Measure</span>
                 <div className="measurement-mode-switch" role="group" aria-label="Measurement type">
                   <button
                     type="button"
-                    className={measurementType === 'distance' ? 'selected' : ''}
+                    className={measurementType === 'distance' ? 'is-selected' : ''}
                     aria-label="Distance measurement"
                     title="Distance"
                     onClick={() => setMeasurementType('distance')}
@@ -250,7 +250,7 @@ export function App() {
                   </button>
                   <button
                     type="button"
-                    className={measurementType === 'area' ? 'selected' : ''}
+                    className={measurementType === 'area' ? 'is-selected' : ''}
                     aria-label="Area measurement"
                     title="Area"
                     onClick={() => setMeasurementType('area')}
@@ -274,37 +274,37 @@ export function App() {
               </strong>
             </section>
 
-            {selectedCity ? (
-              <section className="city-card">
+            {selectedPoint ? (
+              <section className="panel-card">
                 <div className="section-title">
                   <Route aria-hidden="true" />
-                  <span>{selectedCity.name}</span>
+                  <span>{selectedPoint.name}</span>
                 </div>
                 <p>
-                  {selectedCity.location.lat.toFixed(4)}, {selectedCity.location.lon.toFixed(4)}
+                  {selectedPoint.location.lat.toFixed(4)}, {selectedPoint.location.lon.toFixed(4)}
                 </p>
               </section>
             ) : null}
 
-            <section className="city-list-section">
+            <section className="point-list-section">
               <label className="search-box">
                 <Search aria-hidden="true" />
                 <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search points" />
               </label>
-              <div className="city-list">
-                {visibleCities.map((city) => (
+              <div className="point-list">
+                {visiblePoints.map((point) => (
                   <button
                     type="button"
-                    key={city.id}
-                    className={city.id === selectedCityId ? 'selected' : ''}
+                    key={point.id}
+                    className={point.id === selectedPointId ? 'is-selected' : ''}
                     onClick={() => {
-                      setSelectedCityId(city.id);
-                      requestFlyToCity(city.id);
+                      setSelectedPointId(point.id);
+                      requestFlyToPoint(point.id);
                     }}
                   >
-                    <span>{city.name}</span>
+                    <span>{point.name}</span>
                     <small>
-                      {city.location.lat.toFixed(2)} / {city.location.lon.toFixed(2)}
+                      {point.location.lat.toFixed(2)} / {point.location.lon.toFixed(2)}
                     </small>
                   </button>
                 ))}

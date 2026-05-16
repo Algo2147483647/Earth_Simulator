@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as Cesium from 'cesium';
-import type { City } from '../features/visited/types';
+import type { Point } from '../features/visited/types';
 import type { RouteEdge } from '../features/routes/types';
 import { createGridLayer } from './layers/gridLayer';
 import { createMeasureLayer, type Measurement, type MeasurementType } from './layers/measureLayer';
@@ -8,7 +8,7 @@ import { createPointsLayer } from './layers/pointsLayer';
 import { createRouteLayer } from './layers/routeLayer';
 
 type CesiumViewerProps = {
-  cities: City[];
+  points: Point[];
   routes: RouteEdge[];
   showPoints: boolean;
   showRoutes: boolean;
@@ -17,20 +17,20 @@ type CesiumViewerProps = {
   measureMode: boolean;
   measurementType: MeasurementType;
   clearMeasurementRequest: number;
-  selectedCityId?: string;
-  flyToCityRequest: number;
+  selectedPointId?: string;
+  flyToPointRequest: number;
   flyToAllRequest: number;
   currentLocationRequest: {
     lat: number;
     lon: number;
     request: number;
   };
-  onSelectCity: (cityId?: string) => void;
+  onSelectPoint: (pointId?: string) => void;
   onMeasurementChange: (measurement: Measurement) => void;
 };
 
 export function CesiumViewer({
-  cities,
+  points,
   routes,
   showPoints,
   showRoutes,
@@ -39,16 +39,16 @@ export function CesiumViewer({
   measureMode,
   measurementType,
   clearMeasurementRequest,
-  selectedCityId,
-  flyToCityRequest,
+  selectedPointId,
+  flyToPointRequest,
   flyToAllRequest,
   currentLocationRequest,
-  onSelectCity,
+  onSelectPoint,
   onMeasurementChange
 }: CesiumViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<Cesium.Viewer | null>(null);
-  const pointsLayerRef = useRef(createPointsLayer(onSelectCity));
+  const pointsLayerRef = useRef(createPointsLayer(onSelectPoint));
   const routeLayerRef = useRef(createRouteLayer());
   const gridLayerRef = useRef(createGridLayer());
   const measureLayerRef = useRef(createMeasureLayer(onMeasurementChange));
@@ -116,12 +116,12 @@ export function CesiumViewer({
   }, []);
 
   useEffect(() => {
-    pointsLayerRef.current.update({ cities, visible: showPoints, selectedCityId });
-  }, [cities, selectedCityId, showPoints]);
+    pointsLayerRef.current.update({ points, visible: showPoints, selectedPointId });
+  }, [points, selectedPointId, showPoints]);
 
   useEffect(() => {
-    routeLayerRef.current.update({ routes, cities, visible: showRoutes });
-  }, [cities, routes, showRoutes]);
+    routeLayerRef.current.update({ routes, points, visible: showRoutes });
+  }, [points, routes, showRoutes]);
 
   useEffect(() => {
     gridLayerRef.current.update({ visible: showGrid });
@@ -143,13 +143,13 @@ export function CesiumViewer({
 
   useEffect(() => {
     const viewer = viewerRef.current;
-    const city = cities.find((item) => item.id === selectedCityId);
-    if (!viewer || !city || flyToCityRequest === 0) {
+    const point = points.find((item) => item.id === selectedPointId);
+    if (!viewer || !point || flyToPointRequest === 0) {
       return;
     }
 
     viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(city.location.lon, city.location.lat, 600_000),
+      destination: Cesium.Cartesian3.fromDegrees(point.location.lon, point.location.lat, 600_000),
       orientation: {
         heading: 0,
         pitch: Cesium.Math.toRadians(-90),
@@ -157,19 +157,19 @@ export function CesiumViewer({
       },
       duration: 1.4
     });
-  }, [cities, flyToCityRequest, selectedCityId]);
+  }, [points, flyToPointRequest, selectedPointId]);
 
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!viewer || cities.length === 0 || flyToAllRequest === 0) {
+    if (!viewer || points.length === 0 || flyToAllRequest === 0) {
       return;
     }
 
     const rectangle = Cesium.Rectangle.fromDegrees(
-      Math.min(...cities.map((city) => city.location.lon)) - 8,
-      Math.min(...cities.map((city) => city.location.lat)) - 5,
-      Math.max(...cities.map((city) => city.location.lon)) + 8,
-      Math.max(...cities.map((city) => city.location.lat)) + 5
+      Math.min(...points.map((point) => point.location.lon)) - 8,
+      Math.min(...points.map((point) => point.location.lat)) - 5,
+      Math.max(...points.map((point) => point.location.lon)) + 8,
+      Math.max(...points.map((point) => point.location.lat)) + 5
     );
     viewer.camera.flyTo({
       destination: rectangle,
@@ -180,7 +180,7 @@ export function CesiumViewer({
       },
       duration: 1.2
     });
-  }, [cities, flyToAllRequest]);
+  }, [points, flyToAllRequest]);
 
   useEffect(() => {
     const viewer = viewerRef.current;

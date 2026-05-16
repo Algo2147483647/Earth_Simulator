@@ -1,28 +1,28 @@
-import type { City } from '../visited/types';
+import type { Point } from '../visited/types';
 import type { RouteEdge } from './types';
 
 const EARTH_RADIUS_KM = 6371;
 
-export function buildMinimumSpanningTree(cities: City[]): RouteEdge[] {
-  if (cities.length <= 1) {
+export function buildMinimumSpanningTree(points: Point[]): RouteEdge[] {
+  if (points.length <= 1) {
     return [];
   }
 
-  const visited = new Array<boolean>(cities.length).fill(false);
-  const bestDistance = new Array<number>(cities.length).fill(Number.POSITIVE_INFINITY);
-  const bestFrom = new Array<number>(cities.length).fill(-1);
+  const visited = new Array<boolean>(points.length).fill(false);
+  const bestDistance = new Array<number>(points.length).fill(Number.POSITIVE_INFINITY);
+  const bestFrom = new Array<number>(points.length).fill(-1);
   const edges: RouteEdge[] = [];
-  const locations = cities.map((city) => ({
-    lat: toRadians(city.location.lat),
-    lon: toRadians(city.location.lon),
-    cosLat: Math.cos(toRadians(city.location.lat))
+  const locations = points.map((point) => ({
+    lat: toRadians(point.location.lat),
+    lon: toRadians(point.location.lon),
+    cosLat: Math.cos(toRadians(point.location.lat))
   }));
   let currentIndex = 0;
 
-  for (let edgeCount = 0; edgeCount < cities.length - 1; edgeCount += 1) {
+  for (let edgeCount = 0; edgeCount < points.length - 1; edgeCount += 1) {
     visited[currentIndex] = true;
 
-    for (let toIndex = 0; toIndex < cities.length; toIndex += 1) {
+    for (let toIndex = 0; toIndex < points.length; toIndex += 1) {
       if (visited[toIndex]) {
         continue;
       }
@@ -36,7 +36,7 @@ export function buildMinimumSpanningTree(cities: City[]): RouteEdge[] {
 
     let nextIndex = -1;
     let nextDistance = Number.POSITIVE_INFINITY;
-    for (let index = 0; index < cities.length; index += 1) {
+    for (let index = 0; index < points.length; index += 1) {
       if (!visited[index] && bestDistance[index] < nextDistance) {
         nextIndex = index;
         nextDistance = bestDistance[index];
@@ -48,8 +48,8 @@ export function buildMinimumSpanningTree(cities: City[]): RouteEdge[] {
     }
 
     edges.push({
-      fromCityId: cities[bestFrom[nextIndex]].id,
-      toCityId: cities[nextIndex].id,
+      fromPointId: points[bestFrom[nextIndex]].id,
+      toPointId: points[nextIndex].id,
       distanceKm: nextDistance
     });
     currentIndex = nextIndex;

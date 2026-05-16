@@ -1,56 +1,56 @@
 import { useState } from 'react';
-import type { City } from './types';
+import type { Point } from './types';
 
-type VisitedCitiesState = {
-  cities: City[];
+type VisitedPointsState = {
+  points: Point[];
   loading: boolean;
   error?: string;
   sourceName?: string;
 };
 
-export function useVisitedCities() {
-  const [state, setState] = useState<VisitedCitiesState>({
-    cities: [],
+export function useVisitedPoints() {
+  const [state, setState] = useState<VisitedPointsState>({
+    points: [],
     loading: false
   });
 
-  async function loadCitiesFromFile(file: File) {
+  async function loadPointsFromFile(file: File) {
     setState((current) => ({ ...current, loading: true, error: undefined }));
 
     try {
       const parsed = JSON.parse(await file.text()) as unknown;
       setState({
-        cities: normalizeCities(parsed),
+        points: normalizePoints(parsed),
         loading: false,
         sourceName: file.name
       });
     } catch (error: unknown) {
       setState({
-        cities: [],
+        points: [],
         loading: false,
-        error: error instanceof Error ? error.message : 'Failed to load city data'
+        error: error instanceof Error ? error.message : 'Failed to load point data'
       });
     }
   }
 
   return {
     ...state,
-    loadCitiesFromFile
+    loadPointsFromFile
   };
 }
 
-function normalizeCities(input: unknown): City[] {
+function normalizePoints(input: unknown): Point[] {
   const items = Array.isArray(input) ? input : [input];
-  const cities = items.map((item, index) => normalizeCity(item, index));
+  const points = items.map((item, index) => normalizePoint(item, index));
 
-  if (cities.length === 0) {
-    throw new Error('The JSON file does not contain any loadable city data');
+  if (points.length === 0) {
+    throw new Error('The JSON file does not contain any loadable point data');
   }
 
-  return cities;
+  return points;
 }
 
-function normalizeCity(item: unknown, index: number): City {
+function normalizePoint(item: unknown, index: number): Point {
   if (!isObject(item)) {
     throw new Error(`Item ${index + 1} is not an object`);
   }
