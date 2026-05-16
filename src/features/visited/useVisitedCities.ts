@@ -28,7 +28,7 @@ export function useVisitedCities() {
       setState({
         cities: [],
         loading: false,
-        error: error instanceof Error ? error.message : '城市数据加载失败'
+        error: error instanceof Error ? error.message : 'Failed to load city data'
       });
     }
   }
@@ -44,7 +44,7 @@ function normalizeCities(input: unknown): City[] {
   const cities = items.map((item, index) => normalizeCity(item, index));
 
   if (cities.length === 0) {
-    throw new Error('JSON 中没有可加载的城市数据');
+    throw new Error('The JSON file does not contain any loadable city data');
   }
 
   return cities;
@@ -52,12 +52,12 @@ function normalizeCities(input: unknown): City[] {
 
 function normalizeCity(item: unknown, index: number): City {
   if (!isObject(item)) {
-    throw new Error(`第 ${index + 1} 条数据不是对象`);
+    throw new Error(`Item ${index + 1} is not an object`);
   }
 
   const location = item.location;
   if (!isObject(location)) {
-    throw new Error(`第 ${index + 1} 条数据缺少 location`);
+    throw new Error(`Item ${index + 1} is missing location`);
   }
 
   const id = getText(item.id) ?? getText(item.key);
@@ -67,15 +67,15 @@ function normalizeCity(item: unknown, index: number): City {
   const height = getNumber(location.height);
 
   if (!id) {
-    throw new Error(`第 ${index + 1} 条数据缺少 key 或 id`);
+    throw new Error(`Item ${index + 1} is missing key or id`);
   }
 
   if (!name) {
-    throw new Error(`第 ${index + 1} 条数据缺少 name`);
+    throw new Error(`Item ${index + 1} is missing name`);
   }
 
   if (lat === undefined || lon === undefined) {
-    throw new Error(`第 ${index + 1} 条数据缺少有效的 lat/lon`);
+    throw new Error(`Item ${index + 1} is missing valid lat/lon values`);
   }
 
   return {

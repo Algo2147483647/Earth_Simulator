@@ -75,14 +75,14 @@ export function App() {
           {!panelCollapsed ? (
             <div>
               <h1>Earth Simulator</h1>
-              <p>{loading ? '加载城市数据...' : sourceName ? `${cities.length} 个城市 · ${sourceName}` : '未加载城市数据'}</p>
+              <p>{loading ? 'Loading city data...' : sourceName ? `${cities.length} cities - ${sourceName}` : 'No city data loaded'}</p>
             </div>
           ) : null}
           <button
             type="button"
             className="icon-button panel-toggle"
-            aria-label={panelCollapsed ? '展开配置栏' : '折叠配置栏'}
-            title={panelCollapsed ? '展开配置栏' : '折叠配置栏'}
+            aria-label={panelCollapsed ? 'Expand settings panel' : 'Collapse settings panel'}
+            title={panelCollapsed ? 'Expand settings panel' : 'Collapse settings panel'}
             onClick={() => setPanelCollapsed((collapsed) => !collapsed)}
           >
             {panelCollapsed ? <PanelLeftOpen aria-hidden="true" /> : <PanelLeftClose aria-hidden="true" />}
@@ -96,7 +96,7 @@ export function App() {
             <section className="control-section">
               <div className="section-title">
                 <FileJson aria-hidden="true" />
-                <span>数据</span>
+                <span>Data</span>
               </div>
               <input
                 ref={fileInputRef}
@@ -114,17 +114,17 @@ export function App() {
               />
               <button type="button" className="wide-button" onClick={() => fileInputRef.current?.click()}>
                 <FileJson aria-hidden="true" />
-                选择 JSON
+                Select JSON
               </button>
             </section>
 
             <section className="control-section">
               <div className="section-title">
                 <Settings2 aria-hidden="true" />
-                <span>图层</span>
+                <span>Layers</span>
               </div>
               <label className="toggle-row">
-                <span>访问城市</span>
+                <span>Visited cities</span>
                 <input
                   type="checkbox"
                   checked={showVisitedPoints}
@@ -132,7 +132,7 @@ export function App() {
                 />
               </label>
               <label className="toggle-row">
-                <span>最短连接树</span>
+                <span>Minimum spanning tree</span>
                 <input
                   type="checkbox"
                   checked={showRoutes}
@@ -140,13 +140,13 @@ export function App() {
                 />
               </label>
               <label className="toggle-row">
-                <span>经纬网</span>
+                <span>Coordinate grid</span>
                 <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
               </label>
               <label className="toggle-row">
                 <span className="toggle-label-with-icon">
                   <SunMoon aria-hidden="true" />
-                  晨昏光照
+                  Day-night lighting
                 </span>
                 <input
                   type="checkbox"
@@ -157,7 +157,7 @@ export function App() {
               <label className="toggle-row">
                 <span className="toggle-label-with-icon">
                   <Ruler aria-hidden="true" />
-                  地图测距
+                  Map measuring
                 </span>
                 <input
                   type="checkbox"
@@ -167,17 +167,17 @@ export function App() {
               </label>
             </section>
 
-            <section className="metrics-grid" aria-label="统计">
+            <section className="metrics-grid" aria-label="Statistics">
               <div>
-                <span>城市</span>
+                <span>Cities</span>
                 <strong>{cities.length}</strong>
               </div>
               <div>
-                <span>连线</span>
+                <span>Edges</span>
                 <strong>{routes.length}</strong>
               </div>
               <div>
-                <span>总长</span>
+                <span>Total</span>
                 <strong>{Math.round(totalDistance).toLocaleString()} km</strong>
               </div>
             </section>
@@ -186,11 +186,11 @@ export function App() {
               <div className="button-row">
                 <button type="button" disabled={cities.length === 0} onClick={requestFlyToAll}>
                   <Map aria-hidden="true" />
-                  全部
+                  All
                 </button>
                 <button type="button" disabled={!selectedCity} onClick={() => selectedCity && requestFlyToCity(selectedCity.id)}>
                   <LocateFixed aria-hidden="true" />
-                  定位
+                  Locate
                 </button>
               </div>
             </section>
@@ -198,9 +198,9 @@ export function App() {
             <section className="city-card">
               <div className="section-title">
                 <Ruler aria-hidden="true" />
-                <span>测距</span>
+                <span>Measure</span>
               </div>
-              <p>{measureMode ? `左键取点，右键清空 · ${measurement.points} 点` : '开启地图测距后在地图上取点'}</p>
+              <p>{measureMode ? `Left-click to add points, right-click to clear - ${measurement.points} points` : 'Enable map measuring, then click the map to add points'}</p>
               <strong className="measurement-value">{formatDistance(measurement.distanceKm)}</strong>
               <button
                 type="button"
@@ -209,7 +209,7 @@ export function App() {
                 onClick={() => setClearMeasurementRequest((request) => request + 1)}
               >
                 <Trash2 aria-hidden="true" />
-                清空测距
+                Clear measurement
               </button>
             </section>
 
@@ -228,7 +228,7 @@ export function App() {
             <section className="city-list-section">
               <label className="search-box">
                 <Search aria-hidden="true" />
-                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索城市" />
+                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search cities" />
               </label>
               <div className="city-list">
                 {visibleCities.map((city) => (
