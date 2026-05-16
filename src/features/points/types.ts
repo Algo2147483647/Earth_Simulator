@@ -6,6 +6,5 @@ export type Point = {
     lon: number;
     height?: number;
   };
-  visited: boolean;
   tags?: string[];
 };

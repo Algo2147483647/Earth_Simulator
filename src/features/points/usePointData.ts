@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import type { Point } from './types';
 
-type VisitedPointsState = {
+type PointDataState = {
   points: Point[];
   loading: boolean;
   error?: string;
   sourceName?: string;
 };
 
-export function useVisitedPoints() {
-  const [state, setState] = useState<VisitedPointsState>({
+export function usePointData() {
+  const [state, setState] = useState<PointDataState>({
     points: [],
     loading: false
   });
@@ -85,8 +85,7 @@ function normalizePoint(item: unknown, index: number): Point {
       lat,
       lon,
       ...(height === undefined ? {} : { height })
-    },
-    visited: true
+    }
   };
 }
 

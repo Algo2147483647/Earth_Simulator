@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as Cesium from 'cesium';
-import type { Point } from '../features/visited/types';
+import type { Point } from '../features/points/types';
 import type { RouteEdge } from '../features/routes/types';
 import { createGridLayer } from './layers/gridLayer';
 import { createMeasureLayer, type Measurement, type MeasurementType } from './layers/measureLayer';

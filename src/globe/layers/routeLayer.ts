@@ -1,6 +1,6 @@
 import * as Cesium from 'cesium';
 import type { RouteEdge } from '../../features/routes/types';
-import type { Point } from '../../features/visited/types';
+import type { Point } from '../../features/points/types';
 import type { GlobeLayer } from './types';
 
 type RouteLayerState = {

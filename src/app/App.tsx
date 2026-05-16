@@ -17,13 +17,13 @@ import {
 } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 import { buildMinimumSpanningTree } from '../features/routes/mst';
-import { useVisitedPoints } from '../features/visited/useVisitedPoints';
+import { usePointData } from '../features/points/usePointData';
 import { CesiumViewer } from '../globe/CesiumViewer';
 import type { Measurement, MeasurementType } from '../globe/layers/measureLayer';
 import { useGlobeStore } from '../globe/store';
 
 export function App() {
-  const { points, loading, error, sourceName, loadPointsFromFile } = useVisitedPoints();
+  const { points, loading, error, sourceName, loadPointsFromFile } = usePointData();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [query, setQuery] = useState('');
   const [panelCollapsed, setPanelCollapsed] = useState(false);

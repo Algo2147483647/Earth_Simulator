@@ -1,0 +1,346 @@
+[
+  {
+    "id": "shenyang",
+    "name": "沈阳",
+    "location": {
+      "lat": 41.79222,
+      "lon": 123.43278
+    }
+  },
+  {
+    "id": "harbin",
+    "name": "哈尔滨",
+    "location": {
+      "lat": 45.75,
+      "lon": 126.65
+    }
+  },
+  {
+    "id": "yining",
+    "name": "伊宁",
+    "location": {
+      "lat": 43.908048,
+      "lon": 81.2748
+    }
+  },
+  {
+    "id": "bole",
+    "name": "博乐",
+    "location": {
+      "lat": 44.89803,
+      "lon": 82.07259
+    }
+  },
+  {
+    "id": "urumqi",
+    "name": "乌鲁木齐",
+    "location": {
+      "lat": 43.80096,
+      "lon": 87.60046
+    }
+  },
+  {
+    "id": "jiayuguan",
+    "name": "嘉峪关",
+    "location": {
+      "lat": 39.81121,
+      "lon": 98.28618
+    }
+  },
+  {
+    "id": "jiuquan",
+    "name": "酒泉",
+    "location": {
+      "lat": 39.74318,
+      "lon": 98.51736
+    }
+  },
+  {
+    "id": "zhangye",
+    "name": "张掖",
+    "location": {
+      "lat": 38.93417,
+      "lon": 100.45167
+    }
+  },
+  {
+    "id": "lanzhou",
+    "name": "兰州",
+    "location": {
+      "lat": 36.05701,
+      "lon": 103.83987
+    }
+  },
+  {
+    "id": "chongqing",
+    "name": "重庆",
+    "location": {
+      "lat": 29.56278,
+      "lon": 106.55278
+    }
+  },
+  {
+    "id": "lijiang",
+    "name": "丽江",
+    "location": {
+      "lat": 26.86879,
+      "lon": 100.22072
+    }
+  },
+  {
+    "id": "dali",
+    "name": "大理",
+    "location": {
+      "lat": 25.58474,
+      "lon": 100.21229
+    }
+  },
+  {
+    "id": "kunming",
+    "name": "昆明",
+    "location": {
+      "lat": 25.03889,
+      "lon": 102.71833
+    }
+  },
+  {
+    "id": "xian",
+    "name": "西安",
+    "location": {
+      "lat": 34.25833,
+      "lon": 108.92861
+    }
+  },
+  {
+    "id": "shijiazhuang",
+    "name": "石家庄",
+    "location": {
+      "lat": 38.04139,
+      "lon": 114.47861
+    }
+  },
+  {
+    "id": "zibo",
+    "name": "淄博",
+    "location": {
+      "lat": 36.79056,
+      "lon": 118.06333
+    }
+  },
+  {
+    "id": "jinan",
+    "name": "济南",
+    "location": {
+      "lat": 36.66833,
+      "lon": 116.99722
+    }
+  },
+  {
+    "id": "qingdao",
+    "name": "青岛",
+    "location": {
+      "lat": 36.06488,
+      "lon": 120.38042
+    }
+  },
+  {
+    "id": "suzhou",
+    "name": "苏州",
+    "location": {
+      "lat": 31.30227,
+      "lon": 120.63132
+    }
+  },
+  {
+    "id": "nanjing",
+    "name": "南京",
+    "location": {
+      "lat": 32.06167,
+      "lon": 118.77778
+    }
+  },
+  {
+    "id": "hangzhou",
+    "name": "杭州",
+    "location": {
+      "lat": 30.29365,
+      "lon": 120.16142
+    }
+  },
+  {
+    "id": "shanghai",
+    "name": "上海",
+    "location": {
+      "lat": 31.22222,
+      "lon": 121.45806
+    }
+  },
+  {
+    "id": "dalian",
+    "name": "大连",
+    "location": {
+      "lat": 38.91222,
+      "lon": 121.60222
+    }
+  },
+  {
+    "id": "ulanchabu",
+    "name": "乌兰察布",
+    "location": {
+      "lat": 40.9906,
+      "lon": 113.12401
+    }
+  },
+  {
+    "id": "wuhan",
+    "name": "武汉",
+    "location": {
+      "lat": 30.58333,
+      "lon": 114.26667
+    }
+  },
+  {
+    "id": "tianjin",
+    "name": "天津",
+    "location": {
+      "lat": 39.14666667,
+      "lon": 117.20555556
+    }
+  },
+  {
+    "id": "qinhuangdao",
+    "name": "秦皇岛",
+    "location": {
+      "lat": 39.93167,
+      "lon": 119.58833
+    }
+  },
+  {
+    "id": "guilin",
+    "name": "桂林",
+    "location": {
+      "lat": 25.28194,
+      "lon": 110.28639
+    }
+  },
+  {
+    "id": "beijing",
+    "name": "北京",
+    "location": {
+      "lat": 39.9075,
+      "lon": 116.39723
+    }
+  },
+  {
+    "id": "baoding",
+    "name": "保定",
+    "location": {
+      "lat": 38.85111,
+      "lon": 115.49028
+    }
+  },
+  {
+    "id": "huangshan",
+    "name": "黄山",
+    "location": {
+      "lat": 29.71139,
+      "lon": 118.3125
+    }
+  },
+  {
+    "id": "xiamen",
+    "name": "厦门",
+    "location": {
+      "lat": 24.47979,
+      "lon": 118.08187
+    }
+  },
+  {
+    "id": "jinhua",
+    "name": "金华",
+    "location": {
+      "lat": 29.10678,
+      "lon": 119.64421
+    }
+  },
+  {
+    "id": "xiangtan",
+    "name": "湘潭",
+    "location": {
+      "lat": 27.85,
+      "lon": 112.9
+    }
+  },
+  {
+    "id": "changsha",
+    "name": "长沙",
+    "location": {
+      "lat": 28.255,
+      "lon": 112.986
+    }
+  },
+  {
+    "id": "shangrao",
+    "name": "上饶",
+    "location": {
+      "lat": 28.45179,
+      "lon": 117.94287
+    }
+  },
+  {
+    "id": "jian",
+    "name": "吉安",
+    "location": {
+      "lat": 27.11716,
+      "lon": 114.97927
+    }
+  },
+  {
+    "id": "jiujiang",
+    "name": "九江",
+    "location": {
+      "lat": 29.70475,
+      "lon": 116.00206
+    }
+  },
+  {
+    "id": "nanchang",
+    "name": "南昌",
+    "location": {
+      "lat": 28.68396,
+      "lon": 115.85306
+    }
+  },
+  {
+    "id": "fuzhou-jiangxi",
+    "name": "抚州",
+    "location": {
+      "lat": 27.98385,
+      "lon": 116.35809
+    }
+  },
+  {
+    "id": "guangzhou",
+    "name": "广州",
+    "location": {
+      "lat": 23.12911,
+      "lon": 113.26439
+    }
+  },
+  {
+    "id": "shenzhen",
+    "name": "深圳",
+    "location": {
+      "lat": 22.5431,
+      "lon": 114.0579
+    }
+  },
+  {
+    "id": "hong-kong",
+    "name": "香港",
+    "location": {
+      "lat": 22.3193,
+      "lon": 114.1694
+    }
+  }
+]

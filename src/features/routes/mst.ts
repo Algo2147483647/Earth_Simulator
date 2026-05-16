@@ -1,4 +1,4 @@
-import type { Point } from '../visited/types';
+import type { Point } from '../points/types';
 import type { RouteEdge } from './types';
 
 const EARTH_RADIUS_KM = 6371;
