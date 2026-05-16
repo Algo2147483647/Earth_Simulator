@@ -1,6 +1,8 @@
 import {
+  DraftingCompass,
   FileJson,
   Globe2,
+  LandPlot,
   LocateFixed,
   Map,
   PanelLeftClose,
@@ -235,6 +237,26 @@ export function App() {
               <div className="section-title">
                 <Ruler aria-hidden="true" />
                 <span>Measure</span>
+                <div className="measurement-mode-switch" role="group" aria-label="Measurement type">
+                  <button
+                    type="button"
+                    className={measurementType === 'distance' ? 'selected' : ''}
+                    aria-label="Distance measurement"
+                    title="Distance"
+                    onClick={() => setMeasurementType('distance')}
+                  >
+                    <DraftingCompass aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    className={measurementType === 'area' ? 'selected' : ''}
+                    aria-label="Area measurement"
+                    title="Area"
+                    onClick={() => setMeasurementType('area')}
+                  >
+                    <LandPlot aria-hidden="true" />
+                  </button>
+                </div>
                 <button
                   type="button"
                   className="icon-button section-action"
@@ -244,22 +266,6 @@ export function App() {
                   onClick={() => setClearMeasurementRequest((request) => request + 1)}
                 >
                   <Trash2 aria-hidden="true" />
-                </button>
-              </div>
-              <div className="segmented-control" role="group" aria-label="Measurement type">
-                <button
-                  type="button"
-                  className={measurementType === 'distance' ? 'selected' : ''}
-                  onClick={() => setMeasurementType('distance')}
-                >
-                  Distance
-                </button>
-                <button
-                  type="button"
-                  className={measurementType === 'area' ? 'selected' : ''}
-                  onClick={() => setMeasurementType('area')}
-                >
-                  Area
                 </button>
               </div>
               <strong className="measurement-value">

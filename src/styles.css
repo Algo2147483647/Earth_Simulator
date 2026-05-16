@@ -148,7 +148,54 @@ input {
 }
 
 .section-action {
+  margin-left: 6px;
+}
+
+.measurement-mode-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   margin-left: auto;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.024)),
+    rgba(255, 255, 255, 0.035);
+}
+
+.side-panel .measurement-mode-switch button {
+  width: 28px;
+  min-height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.side-panel .measurement-mode-switch button::before {
+  opacity: 0;
+}
+
+.side-panel .measurement-mode-switch button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: none;
+}
+
+.side-panel .measurement-mode-switch button.selected,
+.side-panel .measurement-mode-switch button.selected:hover:not(:disabled) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055)),
+    rgba(var(--map-accent-rgb), 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.055);
+}
+
+.side-panel .measurement-mode-switch svg {
+  width: 15px;
+  height: 15px;
 }
 
 .toggle-row {
@@ -455,6 +502,10 @@ input {
   background: transparent;
   box-shadow: none;
   font-size: 13px;
+}
+
+.city-list button::before {
+  display: none;
 }
 
 .city-list button:hover:not(:disabled) {
