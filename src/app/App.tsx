@@ -75,7 +75,6 @@ export function App() {
           {!panelCollapsed ? (
             <div>
               <h1>Earth Simulator</h1>
-              <p>{loading ? 'Loading city data...' : sourceName ? `${cities.length} cities - ${sourceName}` : 'No city data loaded'}</p>
             </div>
           ) : null}
           <button
@@ -114,7 +113,7 @@ export function App() {
               />
               <button type="button" className="wide-button" onClick={() => fileInputRef.current?.click()}>
                 <FileJson aria-hidden="true" />
-                Select JSON
+                <span className="button-text">{loading ? 'Loading JSON...' : sourceName ?? 'Select JSON'}</span>
               </button>
             </section>
 
@@ -124,7 +123,7 @@ export function App() {
                 <span>Layers</span>
               </div>
               <label className="toggle-row">
-                <span>Visited cities</span>
+                <span>Show Points</span>
                 <input
                   type="checkbox"
                   checked={showVisitedPoints}
@@ -169,7 +168,7 @@ export function App() {
 
             <section className="metrics-grid" aria-label="Statistics">
               <div>
-                <span>Cities</span>
+                <span>Points</span>
                 <strong>{cities.length}</strong>
               </div>
               <div>
@@ -186,7 +185,7 @@ export function App() {
               <div className="button-row">
                 <button type="button" disabled={cities.length === 0} onClick={requestFlyToAll}>
                   <Map aria-hidden="true" />
-                  All
+                  All Points
                 </button>
                 <button type="button" disabled={!selectedCity} onClick={() => selectedCity && requestFlyToCity(selectedCity.id)}>
                   <LocateFixed aria-hidden="true" />
@@ -199,18 +198,18 @@ export function App() {
               <div className="section-title">
                 <Ruler aria-hidden="true" />
                 <span>Measure</span>
+                <button
+                  type="button"
+                  className="icon-button section-action"
+                  aria-label="Clear measurement"
+                  title="Clear measurement"
+                  disabled={measurement.points === 0}
+                  onClick={() => setClearMeasurementRequest((request) => request + 1)}
+                >
+                  <Trash2 aria-hidden="true" />
+                </button>
               </div>
-              <p>{measureMode ? `Left-click to add points, right-click to clear - ${measurement.points} points` : 'Enable map measuring, then click the map to add points'}</p>
               <strong className="measurement-value">{formatDistance(measurement.distanceKm)}</strong>
-              <button
-                type="button"
-                className="wide-button subtle-button"
-                disabled={measurement.points === 0}
-                onClick={() => setClearMeasurementRequest((request) => request + 1)}
-              >
-                <Trash2 aria-hidden="true" />
-                Clear measurement
-              </button>
             </section>
 
             {selectedCity ? (
@@ -228,7 +227,7 @@ export function App() {
             <section className="city-list-section">
               <label className="search-box">
                 <Search aria-hidden="true" />
-                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search cities" />
+                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search points" />
               </label>
               <div className="city-list">
                 {visibleCities.map((city) => (

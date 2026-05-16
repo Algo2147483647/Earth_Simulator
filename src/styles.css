@@ -144,6 +144,10 @@ button svg {
   font-weight: 650;
 }
 
+.section-action {
+  margin-left: auto;
+}
+
 .toggle-row {
   display: flex;
   align-items: center;
@@ -217,6 +221,13 @@ button {
   color: #f7fbff;
   background: rgba(91, 192, 235, 0.16);
   cursor: pointer;
+}
+
+.button-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 button:disabled {
