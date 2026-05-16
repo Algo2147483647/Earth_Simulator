@@ -2,6 +2,7 @@ import {
   DraftingCompass,
   FileJson,
   Globe2,
+  Grid3X3,
   LandPlot,
   LocateFixed,
   Map,
@@ -159,50 +160,63 @@ export function App() {
             <section className="control-section">
               <div className="section-title">
                 <Settings2 aria-hidden="true" />
-                <span>Layers</span>
+                <span>Tools</span>
               </div>
-              <label className="toggle-row">
-                <span>Show Points</span>
-                <input
-                  type="checkbox"
-                  checked={showPoints}
-                  onChange={(event) => setShowPoints(event.target.checked)}
-                />
-              </label>
-              <label className="toggle-row">
-                <span>Minimum spanning tree</span>
-                <input
-                  type="checkbox"
-                  checked={showRoutes}
-                  onChange={(event) => setShowRoutes(event.target.checked)}
-                />
-              </label>
-              <label className="toggle-row">
-                <span>Coordinate grid</span>
-                <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
-              </label>
-              <label className="toggle-row">
-                <span className="toggle-label-with-icon">
+              <div className="tool-button-grid">
+                <button
+                  type="button"
+                  className={showPoints ? 'selected' : ''}
+                  aria-pressed={showPoints}
+                  onClick={() => setShowPoints(!showPoints)}
+                >
+                  <Globe2 aria-hidden="true" />
+                  Points
+                </button>
+                <button
+                  type="button"
+                  className={showRoutes ? 'selected' : ''}
+                  aria-pressed={showRoutes}
+                  onClick={() => setShowRoutes(!showRoutes)}
+                >
+                  <Route aria-hidden="true" />
+                  MST
+                </button>
+                <button
+                  type="button"
+                  className={showGrid ? 'selected' : ''}
+                  aria-pressed={showGrid}
+                  onClick={() => setShowGrid(!showGrid)}
+                >
+                  <Grid3X3 aria-hidden="true" />
+                  Grid
+                </button>
+                <button
+                  type="button"
+                  className={showDayNight ? 'selected' : ''}
+                  aria-pressed={showDayNight}
+                  onClick={() => setShowDayNight(!showDayNight)}
+                >
                   <SunMoon aria-hidden="true" />
-                  Day-night lighting
-                </span>
-                <input
-                  type="checkbox"
-                  checked={showDayNight}
-                  onChange={(event) => setShowDayNight(event.target.checked)}
-                />
-              </label>
-              <label className="toggle-row">
-                <span className="toggle-label-with-icon">
-                  <Ruler aria-hidden="true" />
-                  Map measuring
-                </span>
-                <input
-                  type="checkbox"
-                  checked={measureMode}
-                  onChange={(event) => setMeasureMode(event.target.checked)}
-                />
-              </label>
+                  Light
+                </button>
+                <button
+                  type="button"
+                  className={measureMode ? 'selected' : ''}
+                  aria-pressed={measureMode}
+                  onClick={() => setMeasureMode(!measureMode)}
+                >
+                  <DraftingCompass aria-hidden="true" />
+                  Measure
+                </button>
+                <button type="button" disabled={cities.length === 0} onClick={requestFlyToAll}>
+                  <Map aria-hidden="true" />
+                  All Points
+                </button>
+                <button type="button" disabled={locating} onClick={locateCurrentPosition}>
+                  <LocateFixed aria-hidden="true" />
+                  {locating ? 'Locating' : 'Locate'}
+                </button>
+              </div>
             </section>
 
             <section className="metrics-grid" aria-label="Statistics">
@@ -220,22 +234,9 @@ export function App() {
               </div>
             </section>
 
-            <section className="control-section">
-              <div className="button-row">
-                <button type="button" disabled={cities.length === 0} onClick={requestFlyToAll}>
-                  <Map aria-hidden="true" />
-                  All Points
-                </button>
-                <button type="button" disabled={locating} onClick={locateCurrentPosition}>
-                  <LocateFixed aria-hidden="true" />
-                  {locating ? 'Locating' : 'Locate'}
-                </button>
-              </div>
-            </section>
-
             <section className="city-card">
               <div className="section-title">
-                <Ruler aria-hidden="true" />
+                <DraftingCompass aria-hidden="true" />
                 <span>Measure</span>
                 <div className="measurement-mode-switch" role="group" aria-label="Measurement type">
                   <button
@@ -245,7 +246,7 @@ export function App() {
                     title="Distance"
                     onClick={() => setMeasurementType('distance')}
                   >
-                    <DraftingCompass aria-hidden="true" />
+                    <Ruler aria-hidden="true" />
                   </button>
                   <button
                     type="button"
