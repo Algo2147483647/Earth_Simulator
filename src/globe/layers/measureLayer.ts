@@ -18,6 +18,8 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
   let active = false;
   let lastClearRequest = 0;
   let positions: Cesium.Cartesian3[] = [];
+  let pointerDownPosition: Cesium.Cartesian2 | undefined;
+  let pointerMoved = false;
 
   function reset() {
     positions = [];
@@ -106,11 +108,42 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
           return;
         }
 
-        const position = pickGlobePosition(viewer, movement.position);
+        pointerDownPosition = Cesium.Cartesian2.clone(movement.position);
+        pointerMoved = false;
+      }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+      handler.setInputAction((movement: Cesium.ScreenSpaceEventHandler.MotionEvent) => {
+        if (!active || !pointerDownPosition) {
+          return;
+        }
+
+        if (Cesium.Cartesian2.distance(pointerDownPosition, movement.endPosition) > 5) {
+          pointerMoved = true;
+        }
+      }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+      handler.setInputAction((movement: Cesium.ScreenSpaceEventHandler.PositionedEvent) => {
+        if (!active || !viewer || !pointerDownPosition) {
+          pointerDownPosition = undefined;
+          pointerMoved = false;
+          return;
+        }
+
+        const clickPosition = movement.position;
+        const clickedNearDownPosition = Cesium.Cartesian2.distance(pointerDownPosition, clickPosition) <= 5;
+        pointerDownPosition = undefined;
+
+        if (pointerMoved || !clickedNearDownPosition) {
+          pointerMoved = false;
+          return;
+        }
+
+        pointerMoved = false;
+        const position = pickGlobePosition(viewer, clickPosition);
         if (position) {
           addPoint(position);
         }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      }, Cesium.ScreenSpaceEventType.LEFT_UP);
 
       handler.setInputAction(() => {
         if (active) {
@@ -140,15 +173,18 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
       dataSource = undefined;
       viewer = undefined;
       positions = [];
+      pointerDownPosition = undefined;
+      pointerMoved = false;
     }
   };
 }
 
 function pickGlobePosition(viewer: Cesium.Viewer, windowPosition: Cesium.Cartesian2) {
-  if (viewer.scene.pickPositionSupported) {
-    const picked = viewer.scene.pickPosition(windowPosition);
-    if (Cesium.defined(picked)) {
-      return picked;
+  const ray = viewer.camera.getPickRay(windowPosition);
+  if (ray) {
+    const globePicked = viewer.scene.globe.pick(ray, viewer.scene);
+    if (Cesium.defined(globePicked)) {
+      return globePicked;
     }
   }
 
