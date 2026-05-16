@@ -19,7 +19,6 @@ body {
   overflow: hidden;
 }
 
-button,
 input {
   font: inherit;
 }
@@ -88,7 +87,7 @@ input {
 .section-title svg,
 .toggle-label-with-icon svg,
 .search-box svg,
-button svg {
+.side-panel button svg {
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
@@ -210,7 +209,7 @@ button svg {
   background: rgba(255, 255, 255, 0.08);
 }
 
-button {
+.side-panel button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +229,7 @@ button {
   white-space: nowrap;
 }
 
-button:disabled {
+.side-panel button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }

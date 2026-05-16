@@ -51,11 +51,17 @@ export function CesiumViewer({
     }
 
     Cesium.Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_ION_TOKEN ?? '';
+    const imageryProviderViewModels = createImageryProviderViewModels();
+    const terrainProviderViewModels = createTerrainProviderViewModels();
 
     const viewer = new Cesium.Viewer(containerRef.current, {
       animation: false,
       timeline: false,
       baseLayerPicker: true,
+      imageryProviderViewModels,
+      selectedImageryProviderViewModel: imageryProviderViewModels[0],
+      terrainProviderViewModels,
+      selectedTerrainProviderViewModel: terrainProviderViewModels[0],
       geocoder: false,
       homeButton: false,
       sceneModePicker: false,
@@ -63,7 +69,6 @@ export function CesiumViewer({
       fullscreenButton: false,
       infoBox: false,
       selectionIndicator: false,
-      terrainProvider: new Cesium.EllipsoidTerrainProvider()
     });
 
     viewer.scene.globe.enableLighting = showDayNight;
@@ -162,4 +167,48 @@ export function CesiumViewer({
   }, [cities, flyToAllRequest]);
 
   return <div ref={containerRef} className="cesium-root" />;
+}
+
+function createImageryProviderViewModels() {
+  return [
+    new Cesium.ProviderViewModel({
+      name: 'Natural Earth II',
+      tooltip: 'Local Natural Earth II imagery',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/naturalEarthII.png'),
+      category: 'Imagery',
+      creationFunction: () => Cesium.TileMapServiceImageryProvider.fromUrl(Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII'))
+    }),
+    new Cesium.ProviderViewModel({
+      name: 'OpenStreetMap',
+      tooltip: 'OpenStreetMap map tiles',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/openStreetMap.png'),
+      category: 'Imagery',
+      creationFunction: () =>
+        new Cesium.OpenStreetMapImageryProvider({
+          url: 'https://tile.openstreetmap.org/'
+        })
+    }),
+    new Cesium.ProviderViewModel({
+      name: 'ArcGIS World Imagery',
+      tooltip: 'Esri ArcGIS World Imagery',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/ArcGisMapServiceWorldImagery.png'),
+      category: 'Imagery',
+      creationFunction: () =>
+        Cesium.ArcGisMapServerImageryProvider.fromUrl(
+          'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+        )
+    })
+  ];
+}
+
+function createTerrainProviderViewModels() {
+  return [
+    new Cesium.ProviderViewModel({
+      name: 'WGS84 Ellipsoid',
+      tooltip: 'Flat WGS84 ellipsoid terrain',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+      category: 'Terrain',
+      creationFunction: () => new Cesium.EllipsoidTerrainProvider()
+    })
+  ];
 }
