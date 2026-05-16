@@ -46,15 +46,15 @@ input {
 .side-panel {
   position: absolute;
   top: 18px;
-  left: 18px;
+  left: 0;
   bottom: 18px;
-  width: min(360px, calc(100vw - 36px));
+  width: min(360px, calc(100vw - 18px));
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 16px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 0 10px 10px 0;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.055) 38%, rgba(8, 12, 20, 0.34)),
     rgba(8, 12, 20, 0.38);
@@ -233,11 +233,11 @@ input {
 .segmented-control button.selected {
   color: #ffffff;
   background:
-    linear-gradient(180deg, rgba(var(--map-accent-soft-rgb), 0.26), rgba(var(--map-accent-deep-rgb), 0.2)),
-    rgba(var(--map-accent-rgb), 0.13);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045)),
+    rgba(var(--map-accent-rgb), 0.12);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 1px 2px rgba(0, 0, 0, 0.24);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.045);
 }
 
 .wide-button {
@@ -256,16 +256,17 @@ input {
   gap: 8px;
   min-height: 38px;
   padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 9px;
   color: #f7fbff;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055)),
-    rgba(20, 27, 38, 0.58);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.045);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-    0 1px 2px rgba(0, 0, 0, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 1px 1px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
   cursor: pointer;
   transition:
     border-color 140ms ease,
@@ -278,34 +279,31 @@ input {
 }
 
 .side-panel button:hover:not(:disabled) {
-  border-color: rgba(var(--map-accent-soft-rgb), 0.3);
+  border-color: rgba(255, 255, 255, 0.16);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.21), rgba(255, 255, 255, 0.075)),
-    rgba(38, 53, 68, 0.62);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.055)),
+    rgba(255, 255, 255, 0.07);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-    0 1px 3px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(var(--map-accent-rgb), 0.055);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 1px 2px rgba(0, 0, 0, 0.16);
 }
 
 .side-panel button:active:not(:disabled) {
-  transform: translateY(1px);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.13)),
-    rgba(13, 18, 26, 0.68);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.105)),
+    rgba(255, 255, 255, 0.045);
   box-shadow:
-    inset 0 1px 2px rgba(0, 0, 0, 0.34),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 1px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.035);
 }
 
 .side-panel button:focus-visible {
   outline: 0;
   border-color: rgba(var(--map-accent-soft-rgb), 0.7);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 0 3px rgba(var(--map-accent-rgb), 0.16),
-    0 1px 2px rgba(0, 0, 0, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 0 0 3px rgba(var(--map-accent-rgb), 0.13),
+    0 1px 1px rgba(0, 0, 0, 0.12);
 }
 
 .side-panel button svg {
@@ -350,11 +348,11 @@ input {
 .side-panel .segmented-control button.selected:hover:not(:disabled) {
   color: #ffffff;
   background:
-    linear-gradient(180deg, rgba(var(--map-accent-soft-rgb), 0.26), rgba(var(--map-accent-deep-rgb), 0.2)),
-    rgba(var(--map-accent-rgb), 0.13);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045)),
+    rgba(var(--map-accent-rgb), 0.12);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 1px 2px rgba(0, 0, 0, 0.24);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.045);
 }
 
 .city-list-section {
