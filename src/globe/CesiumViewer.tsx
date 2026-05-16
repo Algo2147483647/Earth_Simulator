@@ -172,11 +172,14 @@ export function CesiumViewer({
 function createImageryProviderViewModels() {
   return [
     new Cesium.ProviderViewModel({
-      name: 'Natural Earth II',
-      tooltip: 'Local Natural Earth II imagery',
-      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/naturalEarthII.png'),
+      name: 'ArcGIS World Imagery',
+      tooltip: 'High-resolution Esri ArcGIS World Imagery',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/ArcGisMapServiceWorldImagery.png'),
       category: 'Imagery',
-      creationFunction: () => Cesium.TileMapServiceImageryProvider.fromUrl(Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII'))
+      creationFunction: () =>
+        Cesium.ArcGisMapServerImageryProvider.fromUrl(
+          'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+        )
     }),
     new Cesium.ProviderViewModel({
       name: 'OpenStreetMap',
@@ -189,14 +192,14 @@ function createImageryProviderViewModels() {
         })
     }),
     new Cesium.ProviderViewModel({
-      name: 'ArcGIS World Imagery',
-      tooltip: 'Esri ArcGIS World Imagery',
-      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/ArcGisMapServiceWorldImagery.png'),
+      name: 'ArcGIS World Hillshade',
+      tooltip: 'Elevation hillshade map from Esri ArcGIS',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/ArcGisMapServiceWorldHillshade.png'),
       category: 'Imagery',
       creationFunction: () =>
-        Cesium.ArcGisMapServerImageryProvider.fromUrl(
-          'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
-        )
+        Cesium.ArcGisMapServerImageryProvider.fromBasemapType(Cesium.ArcGisBaseMapType.HILLSHADE, {
+          enablePickFeatures: false
+        })
     })
   ];
 }
