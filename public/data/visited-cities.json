@@ -38,6 +38,7 @@
   { "id": "jian", "name": "吉安", "location": { "lat": 27.11716, "lon": 114.97927 }, "visited": true },
   { "id": "jiujiang", "name": "九江", "location": { "lat": 29.70475, "lon": 116.00206 }, "visited": true },
   { "id": "nanchang", "name": "南昌", "location": { "lat": 28.68396, "lon": 115.85306 }, "visited": true },
+  { "id": "fuzhou-jiangxi", "name": "抚州", "location": { "lat": 27.98385, "lon": 116.35809 }, "visited": true },
   { "id": "guangzhou", "name": "广州", "location": { "lat": 23.12911, "lon": 113.26439 }, "visited": true },
   { "id": "shenzhen", "name": "深圳", "location": { "lat": 22.5431, "lon": 114.0579 }, "visited": true },
   { "id": "hong-kong", "name": "香港", "location": { "lat": 22.3193, "lon": 114.1694 }, "visited": true }

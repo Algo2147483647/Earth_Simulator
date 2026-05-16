@@ -3,6 +3,7 @@ import * as Cesium from 'cesium';
 import type { City } from '../features/visited/types';
 import type { RouteEdge } from '../features/routes/types';
 import { createGridLayer } from './layers/gridLayer';
+import { createMeasureLayer, type Measurement } from './layers/measureLayer';
 import { createRouteLayer } from './layers/routeLayer';
 import { createVisitedPointsLayer } from './layers/visitedPointsLayer';
 
@@ -12,10 +13,14 @@ type CesiumViewerProps = {
   showVisitedPoints: boolean;
   showRoutes: boolean;
   showGrid: boolean;
+  showDayNight: boolean;
+  measureMode: boolean;
+  clearMeasurementRequest: number;
   selectedCityId?: string;
   flyToCityRequest: number;
   flyToAllRequest: number;
   onSelectCity: (cityId?: string) => void;
+  onMeasurementChange: (measurement: Measurement) => void;
 };
 
 export function CesiumViewer({
@@ -24,16 +29,21 @@ export function CesiumViewer({
   showVisitedPoints,
   showRoutes,
   showGrid,
+  showDayNight,
+  measureMode,
+  clearMeasurementRequest,
   selectedCityId,
   flyToCityRequest,
   flyToAllRequest,
-  onSelectCity
+  onSelectCity,
+  onMeasurementChange
 }: CesiumViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<Cesium.Viewer | null>(null);
   const pointsLayerRef = useRef(createVisitedPointsLayer(onSelectCity));
   const routeLayerRef = useRef(createRouteLayer());
   const gridLayerRef = useRef(createGridLayer());
+  const measureLayerRef = useRef(createMeasureLayer(onMeasurementChange));
 
   useEffect(() => {
     if (!containerRef.current || viewerRef.current) {
@@ -56,7 +66,7 @@ export function CesiumViewer({
       terrainProvider: new Cesium.EllipsoidTerrainProvider()
     });
 
-    viewer.scene.globe.enableLighting = true;
+    viewer.scene.globe.enableLighting = showDayNight;
     viewer.scene.globe.depthTestAgainstTerrain = false;
     viewer.scene.skyAtmosphere.show = true;
     viewer.camera.setView({
@@ -72,11 +82,13 @@ export function CesiumViewer({
     pointsLayerRef.current.mount(viewer);
     routeLayerRef.current.mount(viewer);
     gridLayerRef.current.mount(viewer);
+    measureLayerRef.current.mount(viewer);
 
     return () => {
       pointsLayerRef.current.unmount();
       routeLayerRef.current.unmount();
       gridLayerRef.current.unmount();
+      measureLayerRef.current.unmount();
       viewer.destroy();
       viewerRef.current = null;
     };
@@ -93,6 +105,20 @@ export function CesiumViewer({
   useEffect(() => {
     gridLayerRef.current.update({ visible: showGrid });
   }, [showGrid]);
+
+  useEffect(() => {
+    measureLayerRef.current.update({ active: measureMode, clearRequest: clearMeasurementRequest });
+  }, [clearMeasurementRequest, measureMode]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer) {
+      return;
+    }
+
+    viewer.scene.globe.enableLighting = showDayNight;
+    viewer.scene.requestRender();
+  }, [showDayNight]);
 
   useEffect(() => {
     const viewer = viewerRef.current;
