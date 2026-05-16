@@ -8,55 +8,69 @@ export function buildMinimumSpanningTree(cities: City[]): RouteEdge[] {
     return [];
   }
 
-  const visited = new Set<number>([0]);
+  const visited = new Array<boolean>(cities.length).fill(false);
+  const bestDistance = new Array<number>(cities.length).fill(Number.POSITIVE_INFINITY);
+  const bestFrom = new Array<number>(cities.length).fill(-1);
   const edges: RouteEdge[] = [];
+  const locations = cities.map((city) => ({
+    lat: toRadians(city.location.lat),
+    lon: toRadians(city.location.lon),
+    cosLat: Math.cos(toRadians(city.location.lat))
+  }));
+  let currentIndex = 0;
 
-  while (visited.size < cities.length) {
-    let best:
-      | {
-          fromIndex: number;
-          toIndex: number;
-          distanceKm: number;
-        }
-      | undefined;
+  for (let edgeCount = 0; edgeCount < cities.length - 1; edgeCount += 1) {
+    visited[currentIndex] = true;
 
-    for (const fromIndex of visited) {
-      for (let toIndex = 0; toIndex < cities.length; toIndex += 1) {
-        if (visited.has(toIndex)) {
-          continue;
-        }
+    for (let toIndex = 0; toIndex < cities.length; toIndex += 1) {
+      if (visited[toIndex]) {
+        continue;
+      }
 
-        const distanceKm = greatCircleDistanceKm(cities[fromIndex], cities[toIndex]);
-        if (!best || distanceKm < best.distanceKm) {
-          best = { fromIndex, toIndex, distanceKm };
-        }
+      const distanceKm = greatCircleDistanceKm(locations[currentIndex], locations[toIndex]);
+      if (distanceKm < bestDistance[toIndex]) {
+        bestDistance[toIndex] = distanceKm;
+        bestFrom[toIndex] = currentIndex;
       }
     }
 
-    if (!best) {
+    let nextIndex = -1;
+    let nextDistance = Number.POSITIVE_INFINITY;
+    for (let index = 0; index < cities.length; index += 1) {
+      if (!visited[index] && bestDistance[index] < nextDistance) {
+        nextIndex = index;
+        nextDistance = bestDistance[index];
+      }
+    }
+
+    if (nextIndex === -1) {
       break;
     }
 
-    visited.add(best.toIndex);
     edges.push({
-      fromCityId: cities[best.fromIndex].id,
-      toCityId: cities[best.toIndex].id,
-      distanceKm: best.distanceKm
+      fromCityId: cities[bestFrom[nextIndex]].id,
+      toCityId: cities[nextIndex].id,
+      distanceKm: nextDistance
     });
+    currentIndex = nextIndex;
   }
 
   return edges;
 }
 
-function greatCircleDistanceKm(from: City, to: City) {
-  const fromLat = toRadians(from.location.lat);
-  const toLat = toRadians(to.location.lat);
-  const deltaLat = toRadians(to.location.lat - from.location.lat);
-  const deltaLon = toRadians(to.location.lon - from.location.lon);
+type RadianLocation = {
+  lat: number;
+  lon: number;
+  cosLat: number;
+};
+
+function greatCircleDistanceKm(from: RadianLocation, to: RadianLocation) {
+  const deltaLat = to.lat - from.lat;
+  const deltaLon = to.lon - from.lon;
 
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(fromLat) * Math.cos(toLat) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    from.cosLat * to.cosLat * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return EARTH_RADIUS_KM * c;
 }

@@ -66,6 +66,8 @@ export function createVisitedPointsLayer(onSelectCity: (cityId?: string) => void
           }
         });
       }
+
+      viewer?.scene.requestRender();
     },
 
     unmount() {

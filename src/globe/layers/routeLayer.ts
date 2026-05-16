@@ -11,59 +11,95 @@ type RouteLayerState = {
 
 export function createRouteLayer(): GlobeLayer<RouteLayerState> {
   let viewer: Cesium.Viewer | undefined;
-  let dataSource: Cesium.CustomDataSource | undefined;
+  let primitive: Cesium.Primitive | undefined;
+  let routeKey = '';
 
   return {
     mount(nextViewer) {
       viewer = nextViewer;
-      dataSource = new Cesium.CustomDataSource('visited-routes');
-      viewer.dataSources.add(dataSource);
     },
 
     update({ routes, cities, visible }) {
-      if (!dataSource) {
+      if (!viewer) {
         return;
       }
 
-      const cityById = new Map(cities.map((city) => [city.id, city]));
-      dataSource.show = visible;
-      dataSource.entities.removeAll();
-
-      for (const route of routes) {
-        const from = cityById.get(route.fromCityId);
-        const to = cityById.get(route.toCityId);
-        if (!from || !to) {
-          continue;
+      const nextRouteKey = makeRouteKey(routes, cities);
+      if (nextRouteKey !== routeKey) {
+        if (primitive) {
+          viewer.scene.primitives.remove(primitive);
+          primitive = undefined;
         }
 
-        dataSource.entities.add({
-          id: `route-${route.fromCityId}-${route.toCityId}`,
-          name: `${from.name} - ${to.name}`,
-          polyline: {
-            positions: Cesium.Cartesian3.fromDegreesArray([
-              from.location.lon,
-              from.location.lat,
-              to.location.lon,
-              to.location.lat
-            ]),
-            width: 3,
-            arcType: Cesium.ArcType.GEODESIC,
-            material: new Cesium.PolylineGlowMaterialProperty({
-              color: Cesium.Color.fromCssColorString('#65d6ff').withAlpha(0.72),
-              glowPower: 0.1
-            }),
-            clampToGround: false
-          }
-        });
+        routeKey = nextRouteKey;
+        if (routes.length > 0 && cities.length > 0) {
+          primitive = createRoutePrimitive(routes, cities);
+          primitive.show = visible;
+          viewer.scene.primitives.add(primitive);
+        }
+      } else if (primitive) {
+        primitive.show = visible;
       }
+
+      viewer.scene.requestRender();
     },
 
     unmount() {
-      if (viewer && dataSource) {
-        viewer.dataSources.remove(dataSource, true);
+      if (viewer && primitive) {
+        viewer.scene.primitives.remove(primitive);
       }
-      dataSource = undefined;
+      primitive = undefined;
+      routeKey = '';
       viewer = undefined;
     }
   };
+}
+
+function createRoutePrimitive(routes: RouteEdge[], cities: City[]) {
+  const cityById = new Map(cities.map((city) => [city.id, city]));
+  const color = Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString('#65d6ff').withAlpha(0.72));
+  const geometryInstances: Cesium.GeometryInstance[] = [];
+
+  for (const route of routes) {
+    const from = cityById.get(route.fromCityId);
+    const to = cityById.get(route.toCityId);
+    if (!from || !to) {
+      continue;
+    }
+
+    geometryInstances.push(
+      new Cesium.GeometryInstance({
+        id: `route-${route.fromCityId}-${route.toCityId}`,
+        geometry: new Cesium.PolylineGeometry({
+          positions: Cesium.Cartesian3.fromDegreesArray([
+            from.location.lon,
+            from.location.lat,
+            to.location.lon,
+            to.location.lat
+          ]),
+          width: 3,
+          arcType: Cesium.ArcType.GEODESIC,
+          vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT
+        }),
+        attributes: {
+          color
+        }
+      })
+    );
+  }
+
+  return new Cesium.Primitive({
+    geometryInstances,
+    appearance: new Cesium.PolylineColorAppearance({
+      translucent: true
+    }),
+    asynchronous: true
+  });
+}
+
+function makeRouteKey(routes: RouteEdge[], cities: City[]) {
+  return [
+    cities.map((city) => `${city.id}:${city.location.lon}:${city.location.lat}:${city.location.height ?? 0}`).join('|'),
+    routes.map((route) => `${route.fromCityId}:${route.toCityId}`).join('|')
+  ].join('::');
 }

@@ -78,13 +78,15 @@ export function CesiumViewer({
       fullscreenButton: false,
       infoBox: false,
       selectionIndicator: false,
-      msaaSamples: 4
+      msaaSamples: 1,
+      requestRenderMode: true,
+      maximumRenderTimeChange: 1
     });
 
     viewer.useBrowserRecommendedResolution = false;
-    viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, 1.5);
-    viewer.scene.postProcessStages.fxaa.enabled = true;
-    viewer.scene.msaaSamples = 4;
+    viewer.resolutionScale = 1;
+    viewer.scene.postProcessStages.fxaa.enabled = false;
+    viewer.scene.msaaSamples = 1;
     viewer.scene.globe.enableLighting = showDayNight;
     viewer.scene.globe.depthTestAgainstTerrain = false;
     viewer.scene.skyAtmosphere.show = true;
@@ -212,6 +214,7 @@ export function CesiumViewer({
         disableDepthTestDistance: Number.POSITIVE_INFINITY
       }
     });
+    viewer.scene.requestRender();
 
     viewer.camera.flyTo({
       destination: Cesium.Cartesian3.fromDegrees(currentLocationRequest.lon, currentLocationRequest.lat, 350_000),
