@@ -7,6 +7,9 @@ import { createMeasureLayer, type Measurement, type MeasurementType } from './la
 import { createPointsLayer } from './layers/pointsLayer';
 import { createRouteLayer } from './layers/routeLayer';
 
+const ARCGIS_WORLD_ELEVATION_URL =
+  'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer';
+
 type CesiumViewerProps = {
   points: Point[];
   routes: RouteEdge[];
@@ -264,6 +267,12 @@ function createImageryProviderViewModels() {
 
 function createTerrainProviderViewModels() {
   return [
+    new Cesium.ProviderViewModel({
+      name: 'ArcGIS World Elevation',
+      tooltip: 'Global 3D terrain from Esri ArcGIS World Elevation',
+      iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/CesiumWorldTerrain.png'),
+      creationFunction: () => Cesium.ArcGISTiledElevationTerrainProvider.fromUrl(ARCGIS_WORLD_ELEVATION_URL)
+    }),
     new Cesium.ProviderViewModel({
       name: 'WGS84 Ellipsoid',
       tooltip: 'Flat WGS84 ellipsoid terrain',
