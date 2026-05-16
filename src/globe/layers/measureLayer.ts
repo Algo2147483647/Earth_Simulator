@@ -47,13 +47,24 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
 
     positions.forEach((position, index) => {
       dataSource?.entities.add({
+        id: `measure-point-halo-${index}`,
+        position,
+        point: {
+          pixelSize: 16,
+          color: Cesium.Color.fromCssColorString('#f9f871').withAlpha(0.22),
+          outlineColor: Cesium.Color.WHITE.withAlpha(0.18),
+          outlineWidth: 1,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        }
+      });
+      dataSource?.entities.add({
         id: `measure-point-${index}`,
         position,
         point: {
-          pixelSize: 10,
+          pixelSize: 9,
           color: Cesium.Color.fromCssColorString('#f9f871'),
-          outlineColor: Cesium.Color.BLACK.withAlpha(0.75),
-          outlineWidth: 2,
+          outlineColor: Cesium.Color.WHITE.withAlpha(0.78),
+          outlineWidth: 1,
           disableDepthTestDistance: Number.POSITIVE_INFINITY
         },
         label: {
@@ -85,13 +96,16 @@ export function createMeasureLayer(onChange: (measurement: Measurement) => void)
       const linePositions = type === 'area' && positions.length >= 3 ? [...positions, positions[0]] : positions;
       dataSource.entities.add({
         id: 'measure-line',
-        polyline: {
-          positions: linePositions,
-          width: 3,
-          arcType: Cesium.ArcType.GEODESIC,
-          material: Cesium.Color.fromCssColorString('#f9f871').withAlpha(0.9),
-          clampToGround: false
-        }
+          polyline: {
+            positions: linePositions,
+            width: 4,
+            arcType: Cesium.ArcType.GEODESIC,
+            material: new Cesium.PolylineGlowMaterialProperty({
+              color: Cesium.Color.fromCssColorString('#f9f871').withAlpha(0.92),
+              glowPower: 0.08
+            }),
+            clampToGround: false
+          }
       });
 
       dataSource.entities.add({

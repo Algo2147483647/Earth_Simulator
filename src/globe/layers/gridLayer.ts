@@ -27,12 +27,15 @@ export function createGridLayer(): GlobeLayer<GridLayerState> {
         return;
       }
 
-      const material = Cesium.Color.WHITE.withAlpha(0.18);
+      const material = new Cesium.PolylineGlowMaterialProperty({
+        color: Cesium.Color.WHITE.withAlpha(0.18),
+        glowPower: 0.08
+      });
       for (let lat = -80; lat <= 80; lat += 10) {
         dataSource.entities.add({
           polyline: {
             positions: Cesium.Cartesian3.fromDegreesArray(makeParallel(lat)),
-            width: lat === 0 ? 1.4 : 0.7,
+            width: lat === 0 ? 1.6 : 1,
             arcType: Cesium.ArcType.GEODESIC,
             material
           }
@@ -43,7 +46,7 @@ export function createGridLayer(): GlobeLayer<GridLayerState> {
         dataSource.entities.add({
           polyline: {
             positions: Cesium.Cartesian3.fromDegreesArray(makeMeridian(lon)),
-            width: lon === 0 ? 1.4 : 0.7,
+            width: lon === 0 ? 1.6 : 1,
             arcType: Cesium.ArcType.GEODESIC,
             material
           }

@@ -46,9 +46,12 @@ export function createRouteLayer(): GlobeLayer<RouteLayerState> {
               to.location.lon,
               to.location.lat
             ]),
-            width: 2,
+            width: 3,
             arcType: Cesium.ArcType.GEODESIC,
-            material: Cesium.Color.fromCssColorString('#65d6ff').withAlpha(0.74),
+            material: new Cesium.PolylineGlowMaterialProperty({
+              color: Cesium.Color.fromCssColorString('#65d6ff').withAlpha(0.72),
+              glowPower: 0.1
+            }),
             clampToGround: false
           }
         });

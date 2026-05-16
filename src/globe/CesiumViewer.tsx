@@ -78,8 +78,13 @@ export function CesiumViewer({
       fullscreenButton: false,
       infoBox: false,
       selectionIndicator: false,
+      msaaSamples: 4
     });
 
+    viewer.useBrowserRecommendedResolution = false;
+    viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, 1.5);
+    viewer.scene.postProcessStages.fxaa.enabled = true;
+    viewer.scene.msaaSamples = 4;
     viewer.scene.globe.enableLighting = showDayNight;
     viewer.scene.globe.depthTestAgainstTerrain = false;
     viewer.scene.skyAtmosphere.show = true;
