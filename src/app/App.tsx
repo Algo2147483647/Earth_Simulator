@@ -31,13 +31,13 @@ export function App() {
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState<string>();
   const {
-    showVisitedPoints,
+    showPoints,
     showRoutes,
     showGrid,
     showDayNight,
     measureMode,
     selectedCityId,
-    setShowVisitedPoints,
+    setShowPoints,
     setShowRoutes,
     setShowGrid,
     setShowDayNight,
@@ -90,7 +90,7 @@ export function App() {
       <CesiumViewer
         cities={cities}
         routes={routes}
-        showVisitedPoints={showVisitedPoints}
+        showPoints={showPoints}
         showRoutes={showRoutes}
         showGrid={showGrid}
         showDayNight={showDayNight}
@@ -163,8 +163,8 @@ export function App() {
                 <span>Show Points</span>
                 <input
                   type="checkbox"
-                  checked={showVisitedPoints}
-                  onChange={(event) => setShowVisitedPoints(event.target.checked)}
+                  checked={showPoints}
+                  onChange={(event) => setShowPoints(event.target.checked)}
                 />
               </label>
               <label className="toggle-row">

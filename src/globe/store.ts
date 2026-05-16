@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 type GlobeState = {
-  showVisitedPoints: boolean;
+  showPoints: boolean;
   showRoutes: boolean;
   showGrid: boolean;
   showDayNight: boolean;
@@ -9,7 +9,7 @@ type GlobeState = {
   selectedCityId?: string;
   flyToCityRequest: number;
   flyToAllRequest: number;
-  setShowVisitedPoints: (visible: boolean) => void;
+  setShowPoints: (visible: boolean) => void;
   setShowRoutes: (visible: boolean) => void;
   setShowGrid: (visible: boolean) => void;
   setShowDayNight: (visible: boolean) => void;
@@ -20,7 +20,7 @@ type GlobeState = {
 };
 
 export const useGlobeStore = create<GlobeState>((set) => ({
-  showVisitedPoints: true,
+  showPoints: true,
   showRoutes: true,
   showGrid: true,
   showDayNight: true,
@@ -28,7 +28,7 @@ export const useGlobeStore = create<GlobeState>((set) => ({
   selectedCityId: undefined,
   flyToCityRequest: 0,
   flyToAllRequest: 0,
-  setShowVisitedPoints: (visible) => set({ showVisitedPoints: visible }),
+  setShowPoints: (visible) => set({ showPoints: visible }),
   setShowRoutes: (visible) => set({ showRoutes: visible }),
   setShowGrid: (visible) => set({ showGrid: visible }),
   setShowDayNight: (visible) => set({ showDayNight: visible }),

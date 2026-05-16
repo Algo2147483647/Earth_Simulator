@@ -2,13 +2,13 @@ import * as Cesium from 'cesium';
 import type { City } from '../../features/visited/types';
 import type { GlobeLayer } from './types';
 
-type VisitedPointsState = {
+type PointsState = {
   cities: City[];
   visible: boolean;
   selectedCityId?: string;
 };
 
-export function createVisitedPointsLayer(onSelectCity: (cityId?: string) => void): GlobeLayer<VisitedPointsState> {
+export function createPointsLayer(onSelectCity: (cityId?: string) => void): GlobeLayer<PointsState> {
   let viewer: Cesium.Viewer | undefined;
   let dataSource: Cesium.CustomDataSource | undefined;
   let handler: Cesium.ScreenSpaceEventHandler | undefined;
@@ -16,7 +16,7 @@ export function createVisitedPointsLayer(onSelectCity: (cityId?: string) => void
   return {
     mount(nextViewer) {
       viewer = nextViewer;
-      dataSource = new Cesium.CustomDataSource('visited-cities');
+      dataSource = new Cesium.CustomDataSource('points');
       viewer.dataSources.add(dataSource);
 
       handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);

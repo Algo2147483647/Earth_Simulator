@@ -4,13 +4,13 @@ import type { City } from '../features/visited/types';
 import type { RouteEdge } from '../features/routes/types';
 import { createGridLayer } from './layers/gridLayer';
 import { createMeasureLayer, type Measurement, type MeasurementType } from './layers/measureLayer';
+import { createPointsLayer } from './layers/pointsLayer';
 import { createRouteLayer } from './layers/routeLayer';
-import { createVisitedPointsLayer } from './layers/visitedPointsLayer';
 
 type CesiumViewerProps = {
   cities: City[];
   routes: RouteEdge[];
-  showVisitedPoints: boolean;
+  showPoints: boolean;
   showRoutes: boolean;
   showGrid: boolean;
   showDayNight: boolean;
@@ -32,7 +32,7 @@ type CesiumViewerProps = {
 export function CesiumViewer({
   cities,
   routes,
-  showVisitedPoints,
+  showPoints,
   showRoutes,
   showGrid,
   showDayNight,
@@ -48,7 +48,7 @@ export function CesiumViewer({
 }: CesiumViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<Cesium.Viewer | null>(null);
-  const pointsLayerRef = useRef(createVisitedPointsLayer(onSelectCity));
+  const pointsLayerRef = useRef(createPointsLayer(onSelectCity));
   const routeLayerRef = useRef(createRouteLayer());
   const gridLayerRef = useRef(createGridLayer());
   const measureLayerRef = useRef(createMeasureLayer(onMeasurementChange));
@@ -116,8 +116,8 @@ export function CesiumViewer({
   }, []);
 
   useEffect(() => {
-    pointsLayerRef.current.update({ cities, visible: showVisitedPoints, selectedCityId });
-  }, [cities, selectedCityId, showVisitedPoints]);
+    pointsLayerRef.current.update({ cities, visible: showPoints, selectedCityId });
+  }, [cities, selectedCityId, showPoints]);
 
   useEffect(() => {
     routeLayerRef.current.update({ routes, cities, visible: showRoutes });
